@@ -60,5 +60,5 @@ module.exports = {
 			// if the promise is rejected with an error, then reject this promise with an error
 			.catch(function (error) { reject(error) });
 		});
-	},
+	}
 };
