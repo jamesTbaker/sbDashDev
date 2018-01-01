@@ -21,9 +21,9 @@ const router = express.Router();
 
 //--------  POST (CREATE)
 
-// POST /twitter
-// for POST requests for /twitter
-router.post('/twitter', function (req, res) {
+// POST /process
+// for POST requests for /process
+router.post('/process', function (req, res) {
 	// get a promise to insert the error (request body) into the queue
 	errors.ProcessError(req.body)
 	// if the promise is resolved with the result, then respond with the result as JSON
