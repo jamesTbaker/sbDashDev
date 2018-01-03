@@ -185,12 +185,12 @@ app.use((err, req, res, next) => {
 cron.schedule('* * * * *', () => {
 	// get a promise to post
 	posts.Post()
-	// if the promise is resolved with the posting result, then respond with the docs as JSON
+		// if the promise is resolved with the posting result, then respond with the docs as JSON
 		.then((result) => {
 			console.log('Posted:'); // eslint-disable-line no-console
 			console.log(result); // eslint-disable-line no-console
 		})
-	// if the promise is rejected with an error, then respond with the error as JSON
+		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
 			console.log('Posting error:'); // eslint-disable-line no-console
 			console.log(error); // eslint-disable-line no-console

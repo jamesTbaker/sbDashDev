@@ -22,6 +22,12 @@
 		],
 		"no-tabs": "off",
 		"react/jsx-filename-extension": "off",
-		"no-trailing-spaces": "off"
+		"no-trailing-spaces": "off",
+		"no-underscore-dangle": [
+			"error",
+			{
+				"allow": ["_id"]
+			}
+		]
 	}
 }
