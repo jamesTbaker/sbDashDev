@@ -12,9 +12,9 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			// get a promise to retrieve all documents from the health document collection
 			dbQueries.ReturnAllDocsFromCollection('health')
-			// if the promise is resolved with the docs, then resolve this promise with the docs
+				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result); })
-			// if the promise is rejected with an error, then reject this promise with an error
+				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		})),	
 
@@ -27,9 +27,9 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			// get a promise to retrieve all documents from the health document collection
 			module.exports.ReturnHealthFromDB()
-			// if the promise is resolved with the docs, then resolve this promise with the docs
+				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((result) => { resolve(result); })
-			// if the promise is rejected with an error, then reject this promise with an error
+				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}))
 	,

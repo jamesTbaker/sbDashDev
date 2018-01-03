@@ -66,9 +66,9 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			// get a promise to add error to Twitter
 			module.exports.AddErrorToTwitter(errorData)
-			// if the promise is resolved with the result, then resolve this promise with the result
+				// if the promise is resolved with the result, then resolve this promise with the result
 				.then((result) => { resolve(result); })
-			// if the promise is rejected with an error, then reject this promise with an error
+				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}))
 	,

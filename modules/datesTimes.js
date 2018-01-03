@@ -70,7 +70,7 @@ module.exports = {
 						}
 					});
 				})
-			// if the promise is rejected with an error, reject this promise with the error
+				// if the promise is rejected with an error, reject this promise with the error
 				.catch((error) => { reject(error); });
 		})),	
 
@@ -105,16 +105,16 @@ module.exports = {
 			const nowLocal = module.exports.ReturnNowLocalDateTimeUTCFormat();
 			// get a promise to retrieve the first document from the lastPostDateTime document collection
 			dbQueries.ReturnFirstDocFromCollection('lastPostDateTime')
-			// if the promise is resolved with the docs, then resolve this promise with the docs
+				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((lastPostDateTimeDoc) => {
 					// get a promise to overwrite the document in the lastPostDateTime document collection
 					dbQueries.OverwriteDocInCollection(lastPostDateTimeDoc.docs._id, { datetime: nowLocal }, 'lastPostDateTime')
-					// if the promise is resolved with the docs, then resolve this promise with the docs
+						// if the promise is resolved with the docs, then resolve this promise with the docs
 						.then((result) => { resolve(result); })
-					// if the promise is rejected with an error, then reject this promise with an error
+						// if the promise is rejected with an error, then reject this promise with an error
 						.catch((error) => { reject(error); });
 				})
-			// if the promise is rejected with an error, then reject this promise with an error
+				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		})),	
 
@@ -123,19 +123,19 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			// get a promise to return the current season
 			module.exports.ReturnCurrentPostSchedulingSeason()
-			// if the promise is resolved with the current season
+				// if the promise is resolved with the current season
 				.then((currentPostSchedulingSeason) => {
-				// get a promise to retrieve all posts for the current season that aren't marked as posted
+					// get a promise to retrieve all posts for the current season that aren't marked as posted
 					dbQueries.ReturnAllSpecifiedDocsFromCollection('posts', { $and: [{ season: currentPostSchedulingSeason.name }, { posted: { $ne: true } }] }, {})
-					// if the promise is resolved with the posts
+						// if the promise is resolved with the posts
 						.then((posts) => {
 							// resolve this promise with the quantity of the posts
 							resolve(posts.docs.length); 
 						})
-					// if the promise is rejected with an error, then reject this promise with an error
+						// if the promise is rejected with an error, then reject this promise with an error
 						.catch((error) => { reject(error); });
 				})
-			// if the promise is rejected with an error, then reject this promise with an error
+				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		})),	
 
@@ -144,19 +144,19 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			// get a promise to get post scheduling settings from db
 			settings.ReturnPostSchedulingSettings()
-			// if the promise is resolved with the settings
+				// if the promise is resolved with the settings
 				.then((postSchedulingSettings) => {
-				// get a promise to get post scheduling settings from db
+					// get a promise to get post scheduling settings from db
 					module.exports.ReturnCurrentPostSchedulingSeason()
-					// if the promise is resolved with the settings
+						// if the promise is resolved with the settings
 						.then((currentPostSchedulingSeasonResults) => {
 							// get promise to retrieve first document from lastPostDateTime collection
 							dbQueries.ReturnFirstDocFromCollection('lastPostDateTime')
-							// if the promise is resolved with the document
+								// if the promise is resolved with the document
 								.then((lastPostDateTimeResult) => {                    
 									// get a promise to retrieve the quantity of posts ready for posting this season
 									module.exports.ReturnQuantityOfPostsReadyThisSeason()
-									// if the promise is resolved with the quantity
+										// if the promise is resolved with the quantity
 										.then((quantityOfPostsReadyThisSeason) => {
 											// set up basic vars and do some calculations
 											const today = module.exports.ReturnTodayLocalUTCFormat();
@@ -199,17 +199,17 @@ module.exports = {
 												resolve(false);
 											}
 										})
-									// if the promise is rejected with an error, 
-									// 		then reject this promise with the error
+										// if the promise is rejected with an error, 
+										// 		then reject this promise with the error
 										.catch((error) => { reject(error); });
 								})
-							// if the promise is rejected with an error, then reject this promise with the error
+								// if the promise is rejected with an error, then reject this promise with the error
 								.catch((error) => { reject(error); });
 						})
-					// if the promise is rejected with an error, then reject this promise with the error
+						// if the promise is rejected with an error, then reject this promise with the error
 						.catch((error) => { reject(error); });
 				})
-			// if the promise is rejected with an error, then reject this promise with the error
+				// if the promise is rejected with an error, then reject this promise with the error
 				.catch((error) => { reject(error); });
 		}))
 	,
