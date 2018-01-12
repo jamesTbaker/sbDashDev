@@ -1,9 +1,7 @@
 
 // ----- PULL IN MODULES
 
-const dbQueries = require('./dbQueries');
 const settings = require('./settings');
-const datesTimes = require('./datesTimes');
 const tumblr = require('tumblr.js');
 
 // ----- DEFINE SETTINGS FUNCTIONS
