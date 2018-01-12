@@ -2,7 +2,7 @@
 // ----- PULL IN MODULES, GET EXPRESS ROUTER
 
 const express = require('express');
-const posts = require('../modules/posts');
+const sbTumblr = require('../modules/sbTumblr');
 
 const router = express.Router();
 
@@ -10,8 +10,8 @@ const router = express.Router();
 
 // GET ---
 
-router.get('/', (req, res, next) => {
-	posts.Post()
+router.get('/dash/:offset', (req, res, next) => {
+	sbTumblr.ReturnDashboardPosts(req.params.offset)
 		.then((result) => { res.json(result); })
 		.catch((error) => { res.json(error); });
 });
