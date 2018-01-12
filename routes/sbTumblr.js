@@ -16,6 +16,18 @@ router.get('/dash/:offset', (req, res, next) => {
 		.catch((error) => { res.json(error); });
 });
 
+router.get('/info', (req, res, next) => {
+	sbTumblr.ReturnBlogInfo()
+		.then((result) => { res.json(result); })
+		.catch((error) => { res.json(error); });
+});
+
+router.get('/avatar-url', (req, res, next) => {
+	sbTumblr.ReturnBlogAvatarURL()
+		.then((result) => { res.json(result); })
+		.catch((error) => { res.json(error); });
+});
+
 // ----- EXPORT EXPRESS ROUTER
 
 module.exports = router;

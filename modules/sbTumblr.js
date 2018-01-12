@@ -37,7 +37,6 @@ module.exports = {
 	ReturnDashboardPosts: (offset) =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
-			console.log(offset);
 			// get promise to get tumblr settings
 			settings.ReturnTumblrSettings()
 				// if the promise is resolved with the settings
@@ -48,6 +47,65 @@ module.exports = {
 					tumblrClient
 						.userDashboard(
 							{ offset: offset, type: 'photo' },
+							(tumblrError, tumblrResponse) => {
+								// if Tumblr didn't return an error, resolve this promise with the posts data
+								if (!tumblrError) {
+									resolve({ error: false, posts: tumblrResponse });
+								} else {
+									reject({ error: true, tumblrError: tumblrError });
+								}
+							}
+							// // eslint-disable-line comma-dangle
+						);
+				})
+				// if the promise is rejected with an error, reject this promise with the error
+				.catch((error) => { reject(error); });
+		})
+	),
+
+	ReturnBlogInfo: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get promise to get tumblr settings
+			settings.ReturnTumblrSettings()
+				// if the promise is resolved with the settings
+				.then((tumblrSettings) => {
+					// create a Tumblr client
+					const tumblrClient = module.exports.ReturnTumblrClient(tumblrSettings);
+					// attempt to post
+					tumblrClient
+						.blogInfo(
+							tumblrSettings.tumblr.blogName,
+							(tumblrError, tumblrResponse) => {
+								// if Tumblr didn't return an error, resolve this promise with the posts data
+								if (!tumblrError) {
+									resolve({ error: false, posts: tumblrResponse });
+								} else {
+									reject({ error: true, tumblrError: tumblrError });
+								}
+							}
+							// // eslint-disable-line comma-dangle
+						);
+				})
+				// if the promise is rejected with an error, reject this promise with the error
+				.catch((error) => { reject(error); });
+		})
+	),
+
+	ReturnBlogAvatarURL: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get promise to get tumblr settings
+			settings.ReturnTumblrSettings()
+				// if the promise is resolved with the settings
+				.then((tumblrSettings) => {
+					// create a Tumblr client
+					const tumblrClient = module.exports.ReturnTumblrClient(tumblrSettings);
+					// attempt to post
+					tumblrClient
+						.blogAvatar(
+							tumblrSettings.tumblr.blogName,
+							{ size: '128'},
 							(tumblrError, tumblrResponse) => {
 								// if Tumblr didn't return an error, resolve this promise with the posts data
 								if (!tumblrError) {
