@@ -16,7 +16,8 @@ module.exports = {
 				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
-		})),	
+		})
+	),	
 
 	/**
 	 * keep health separate from db health in anticipation that 
@@ -31,6 +32,6 @@ module.exports = {
 				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
-		}))
-	,
+		})
+	),
 };
