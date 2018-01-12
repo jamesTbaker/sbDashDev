@@ -37,6 +37,7 @@ const settingsRoute = require('./routes/settings');
 const healthRoute = require('./routes/health');
 const errorsRoute = require('./routes/errors');
 const postsRoute = require('./routes/posts');
+const sbTumblrRoute = require('./routes/sbTumblr');
 
 
 // ----- INSTANTIATE, CONFIG EXPRESS APP
@@ -151,6 +152,7 @@ app.use('/settings', settingsRoute);
 app.use('/health', healthRoute);
 app.use('/errors', errorsRoute);
 app.use('/posts', postsRoute);
+app.use('/sbTumblr', sbTumblrRoute);
 
 
 // STATIC LOCATIONS ---
