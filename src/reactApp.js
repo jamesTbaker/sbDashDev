@@ -63,7 +63,7 @@ class SBDashApp extends React.Component {
 		const blogTitle = blogInfoReturn.blogInfo.blog.title;
 		const blogURL = blogInfoReturn.blogInfo.blog.url;
 		const blogAvatarURL = blogAvatarURLReturn.blogAvatarURL.avatar_url;
-		const options = ['Thing One', 'Thing Two', 'Thing Three'];
+		const options = dashboardPostsReturn.posts.posts;
 		return (
 			<div>
 				<Header 
@@ -106,12 +106,22 @@ class Header extends React.Component {
 class Options extends React.Component {
 	render() {
 		return (
-			<div>
-				Options
-				<Option />
-				<Option />
-				<Option />
-			</div>
+			<ul id="posts">
+				{
+					this.props.options.map((optionValue, optionIndex) => <Option 
+						key={optionIndex} 
+						postKey={optionIndex} 
+						photo500URL={optionValue.photos[0]['alt_sizes'][1]['url']}
+						photoOriginalURL={optionValue.photos[0]['original_size']['url']}
+						postID={optionValue.id}
+						postURL={optionValue.post_url}
+						blogName={optionValue.blog_name}
+						reblogKey={optionValue.reblog_key}
+						postType={optionValue.type}
+						caption={optionValue.caption}
+					/>)
+				}
+			</ul>
 		);
 	}
 }
@@ -119,9 +129,32 @@ class Options extends React.Component {
 class Option extends React.Component {
 	render() {
 		return (
-			<div>
-				Option text
-			</div>
+			<li key={this.props.postKey} id={`post_${this.props.postKey}`} className="post">
+				<div className="image-container">
+					<img src={this.props.photo500URL} />
+					<div className="image-cover"></div>
+				</div>
+				<div className="hidden-elements">
+					<input name={`tumblr-post-id_${this.props.postKey}`} type="checkbox" value={this.props.postID} />
+					<input name={`tumblr-post-url_${this.props.postKey}`} type="hidden" value={this.props.postURL} />
+					<input name={`tumblr-blog-name_${this.props.postKey}`} type="hidden" value={this.props.blogName} />
+					<input name={`tumblr-reblog-key_${this.props.postKey}`} type="hidden" value={this.props.reblogKey} />
+					<input name={`tumblr-type_${this.props.postKey}`} type="hidden" value={this.props.postType} />
+					<input name={`tumblr-source_${this.props.postKey}`} type="hidden" value={this.props.photoOriginalURL} />
+					<input name={`tumblr-caption_${this.props.postKey}`} type="hidden" value={this.props.caption} />
+				</div>
+				<div className="user-elements">
+					<label for={`tags_${this.props.postKey}`}>Tags</label>
+					<input name={`tags_${this.props.postKey}`} type="text" />
+					<label for={`this-season_${this.props.postKey}`}>This Season</label>
+					<select id={`this-season_${this.props.postKey}`}><option vlaue="">Phony</option></select>
+					<label for={`my-caption_${this.props.postKey}`}>Caption</label>
+       				<textarea name={`my-caption_${this.props.postKey}`}></textarea>
+				</div>
+				<div className="blog-name">
+					{this.props.blogName} (<a href={this.props.postURL} target="_blank">post</a> | <a href={this.props.photoOriginalURL} target="_blank">image</a>)
+   				</div>
+			</li>
 		);
 	}
 }
