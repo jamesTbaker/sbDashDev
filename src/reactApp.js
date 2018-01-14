@@ -86,7 +86,7 @@ class Header extends React.Component {
 						<img id="blog-logo" src={this.props.blogAvatarURL} />
 					</span>
 					<span id="blog-wordmark-and-abbreviated-data-container">
-						<a id="blog-name" href={this.props.blogURL}>{this.props.blogTitle}</a>
+						<span id="blog-name" href={this.props.blogURL}>{this.props.blogTitle}</span>
 					</span>
 				</div>
 				<div id="form-controls">
@@ -97,8 +97,6 @@ class Header extends React.Component {
 					</span>
 				</div>
 			</header>			
-			
-			
 		);
 	}
 }
