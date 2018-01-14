@@ -36,6 +36,7 @@ const indexRoute = require('./routes/index');
 const settingsRoute = require('./routes/settings');
 const healthRoute = require('./routes/health');
 const errorsRoute = require('./routes/errors');
+const datesTimesRoute = require('./routes/datesTimes');
 const postsRoute = require('./routes/posts');
 const sbTumblrRoute = require('./routes/sbTumblr');
 
@@ -151,6 +152,7 @@ app.use('/', indexRoute);
 app.use('/settings', settingsRoute);
 app.use('/health', healthRoute);
 app.use('/errors', errorsRoute);
+app.use('/datesTimes', datesTimesRoute);
 app.use('/posts', postsRoute);
 app.use('/sbTumblr', sbTumblrRoute);
 
