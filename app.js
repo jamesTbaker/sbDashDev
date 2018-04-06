@@ -22,12 +22,12 @@ const morgan = require('morgan');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const cron = require('node-cron');
+// const cron = require('node-cron');
 
 
 // CUSTOM MODULES ---
 
-const posts = require('./modules/posts');
+// const posts = require('./modules/posts');
 
 
 // ROUTES ---
