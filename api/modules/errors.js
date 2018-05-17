@@ -16,7 +16,11 @@ module.exports = {
 				// construct tweet based on errorData
 				let errorTweet = moment().format('ddd, MM/DD, h:mm a');
 				errorTweet += ` - ${process.env.appName} `;
-				if (typeof (errorData.emergencyError) !== 'undefined' && errorData.emergencyError === true) {
+				if (
+					errorData && 
+					errorData.emergencyError && 
+					errorData.emergencyError === true
+				) {
 					errorTweet += 'Emergency Error: ';
 					if (typeof (errorData.emergencyErrorDetails) !== 'undefined') {
 						errorTweet += `${errorData.emergencyErrorDetails}.`;

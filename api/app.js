@@ -31,8 +31,9 @@ const bodyParser = require('body-parser');
 // ROUTES ---
 
 const indexRoute = require('./routes/index');
-const settingsRoute = require('./routes/settings');
 const healthRoute = require('./routes/health');
+
+
 const errorsRoute = require('./routes/errors');
 const datesTimesRoute = require('./routes/datesTimes');
 const postsRoute = require('./routes/posts');
@@ -146,8 +147,8 @@ app.listen(process.env.apiHttpPort, () => console.log(`Listening on port ${proce
 // ROUTES ---
 
 app.use('/', indexRoute);
-app.use('/settings', settingsRoute);
 app.use('/health', healthRoute);
+
 app.use('/errors', errorsRoute);
 app.use('/datesTimes', datesTimesRoute);
 app.use('/posts', postsRoute);

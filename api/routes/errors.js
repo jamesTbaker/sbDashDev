@@ -3,6 +3,7 @@
 
 const express = require('express');
 const errors = require('../modules/errors');
+const httpAuth = require('../modules/httpAuth');
 
 const router = express.Router();
 
@@ -11,9 +12,16 @@ const router = express.Router();
 // POST ---
 
 router.post('/process', (req, res) => {
-	errors.ProcessError(req.body)
-		.then((result) => { res.json(result); })
-		.catch((error) => { res.json(error); });
+	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'))) {
+		errors.ProcessError(req.body)
+			.then((result) => { res.json(result); })
+			.catch((error) => { res.json(error); });
+	} else {
+		res.json({
+			error: true,
+			authorizationError: true,
+		});
+	}
 });
 
 // ----- EXPORT EXPRESS ROUTER
