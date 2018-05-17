@@ -9,11 +9,11 @@ const router = express.Router();
 
 // ----- CONFIG EXPRESS ROUTER
 
-// POST ---
+// GET ---
 
-router.post('/process', (req, res) => {
+router.get('/process', (req, res, next) => {
 	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'))) {
-		errors.ProcessError(req.body)
+		errors.ProcessError()
 			.then((result) => { res.json(result); })
 			.catch((error) => { res.json(error); });
 	} else {

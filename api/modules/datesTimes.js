@@ -3,7 +3,6 @@
 
 const dbQueries = require('./dbQueries');
 const utilities = require('./utilities');
-const settings = require('./settings');
 const moment = require('moment');
 const momentHoliday = require('moment-holiday');
 
@@ -25,6 +24,22 @@ module.exports = {
 
 	ReturnDayAfterTurkeyDayLocalUTCFormat: () => moment(module.exports.ReturnStartOfTurkeyDayLocalUTCFormat()).add(24, 'hours').format(),
 
+	ReturnPostsSettings: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to retrieve all documents from the postsSettings document collection
+			dbQueries.ReturnAllDocsFromCollection('postsSettings')
+				// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((postsSettings) => {
+					resolve({
+						error: postsSettings.error,
+						postsSettings: postsSettings.docs[0],
+					});
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		})),
+
 	ReturnCurrentPostSchedulingSeason: () => 
 		// return a new promise
 		new Promise(((resolve, reject) => {
@@ -37,11 +52,11 @@ module.exports = {
 			const endOfTurkeyDay = module.exports.ReturnEndOfTurkeyDayLocalUTCFormat();
 			const dayAfterTurkeyDay = module.exports.ReturnDayAfterTurkeyDayLocalUTCFormat();
 			// get a promise to get post scheduling settings from db
-			settings.ReturnPostSchedulingSettings()
+			module.exports.ReturnPostsSettings()
 			// if the promise is resolved with the settings
-				.then((postSchedulingSettings) => {
+				.then((postsSettings) => {
 					// iterate over the seasonal settings
-					postSchedulingSettings.postScheduling.seasonal.forEach(({
+					postsSettings.scheduling.seasonal.forEach(({
 						name, friendlyName, seasonStartDateTime, seasonEndDateTime,
 					}, index) => {
 						// get the season's start and end datetimes
@@ -82,12 +97,12 @@ module.exports = {
 			// get the current date to use in constructing times
 			const today = module.exports.ReturnTodayLocalUTCFormat();
 			// get a promise to get post scheduling settings from db
-			settings.ReturnPostSchedulingSettings()
+			module.exports.ReturnPostsSettings()
 				// if the promise is resolved with the settings
-				.then((postSchedulingSettings) => {
+				.then((postsSettings) => {
 					// get datetime for start and end of posting window
-					const postingWindowStartDateTime = moment(`${today}T${postSchedulingSettings.postScheduling.daily.dayStartTime}`).format();
-					const postingWindowEndDateTime = moment(`${today}T${postSchedulingSettings.postScheduling.daily.dayEndTime}`).format();
+					const postingWindowStartDateTime = moment(`${today}T${postsSettings.scheduling.daily.dayStartTime}`).format();
+					const postingWindowEndDateTime = moment(`${today}T${postsSettings.scheduling.daily.dayEndTime}`).format();
 					// resolve with boolean: nowLocal is between posting window start and end datetimes
 					resolve(moment(nowLocal).isBetween(postingWindowStartDateTime, postingWindowEndDateTime));
 				})
@@ -103,20 +118,20 @@ module.exports = {
 		new Promise(((resolve, reject) => {
 			// get the current local time in UTC format
 			const nowLocal = module.exports.ReturnNowLocalDateTimeUTCFormat();
-			// get a promise to retrieve the first document from the lastPostDateTime document collection
-			dbQueries.ReturnFirstDocFromCollection('lastPostDateTime')
+			// get a promise to retrieve posts settings
+			module.exports.ReturnPostsSettings()
 				// if the promise is resolved with the docs, then resolve this promise with the docs
-				.then((lastPostDateTimeDoc) => {
-					// get a promise to overwrite the document in the lastPostDateTime document collection
-					dbQueries.OverwriteDocInCollection(lastPostDateTimeDoc.docs._id, { datetime: nowLocal }, 'lastPostDateTime')
-						// if the promise is resolved with the docs, then resolve this promise with the docs
+				.then((postsSettings) => {
+					// get a promise to update the lastPostDateTime setting
+					dbQueries.UpdateSpecificFieldInSpecificDocsInCollection('postSettings', '_id', postsSettings._id, true, 'lastPostDateTime', nowLocal)
+						// if the promise is resolved with the result, then resolve this promise with the result
 						.then((result) => { resolve(result); })
 						// if the promise is rejected with an error, then reject this promise with an error
 						.catch((error) => { reject(error); });
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
-		})),	
+		})),
 
 	ReturnQuantityOfPostsReadyThisSeason: () => 
 		// return a new promise
@@ -143,9 +158,9 @@ module.exports = {
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			// get a promise to get post scheduling settings from db
-			settings.ReturnPostSchedulingSettings()
+			module.exports.ReturnPostsSettings()
 				// if the promise is resolved with the settings
-				.then((postSchedulingSettings) => {
+				.then((postsSettings) => {
 					// get a promise to get post scheduling settings from db
 					module.exports.ReturnCurrentPostSchedulingSeason()
 						// if the promise is resolved with the settings
@@ -162,7 +177,7 @@ module.exports = {
 											const today = module.exports.ReturnTodayLocalUTCFormat();
 											const thisYear = module.exports.ReturnThisYearFourDigits();
 											const dailyPostSchedulingSettings = 
-												postSchedulingSettings.postScheduling.daily;
+												postsSettings.scheduling.daily;
 											const nowLocal = module.exports.ReturnNowLocalDateTimeUTCFormat();
 											const lastPostDateTime = lastPostDateTimeResult.docs.datetime;
 											const postingWindowStartDateTime = moment(`${today}T${dailyPostSchedulingSettings.dayStartTime}`);
@@ -211,6 +226,5 @@ module.exports = {
 				})
 				// if the promise is rejected with an error, then reject this promise with the error
 				.catch((error) => { reject(error); });
-		}))
-	,
+		})),
 };

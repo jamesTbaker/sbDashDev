@@ -2,6 +2,7 @@
 // ----- PULL IN EXPRESS, GET EXPRESS ROUTER
 
 const express = require('express');
+const httpAuth = require('../modules/httpAuth');
 
 const router = express.Router();
 
@@ -9,7 +10,14 @@ const router = express.Router();
 
 // GET ---
 router.get('/', (req, res, next) => {
-	res.render('index', { title: 'Index' });
+	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'))) {
+		res.render('index', { title: 'Index' });
+	} else {
+		res.json({
+			error: true,
+			authorizationError: true,
+		});
+	}
 });
 
 // ----- EXPORT EXPRESS ROUTER

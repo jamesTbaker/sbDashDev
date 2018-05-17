@@ -32,10 +32,10 @@ const bodyParser = require('body-parser');
 
 const indexRoute = require('./routes/index');
 const healthRoute = require('./routes/health');
-
-
-const errorsRoute = require('./routes/errors');
 const datesTimesRoute = require('./routes/datesTimes');
+const errorsRoute = require('./routes/errors');
+
+
 const postsRoute = require('./routes/posts');
 const sbTumblrRoute = require('./routes/sbTumblr');
 
@@ -146,13 +146,19 @@ app.listen(process.env.apiHttpPort, () => console.log(`Listening on port ${proce
 
 // ROUTES ---
 
-app.use('/', indexRoute);
-app.use('/health', healthRoute);
+app.use('/api/', indexRoute);
+app.use('/api/health', healthRoute);
+app.use('/api/error', errorsRoute);
 
-app.use('/errors', errorsRoute);
-app.use('/datesTimes', datesTimesRoute);
-app.use('/posts', postsRoute);
-app.use('/sbTumblr', sbTumblrRoute);
+
+// route checked, not module
+
+app.use('/api/datesTimes', datesTimesRoute);
+
+// not checked
+
+app.use('/api/posts', postsRoute);
+app.use('/api/sbTumblr', sbTumblrRoute);
 
 
 // STATIC LOCATIONS ---
