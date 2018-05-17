@@ -61,6 +61,6 @@ module.exports = merge(baseConfig, {
 		contentBase: path.join(__dirname, '../www/js'),
 		hot: true,
 		host: '192.168.0.15', // set to VirtualBox IP so it can be accessed outside VBox
-		port: 3001,
+		port: 4001,
 	},
 });

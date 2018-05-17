@@ -1,11 +1,9 @@
 
 // ----- AS NEEDED, PULL IN DOTENV MODULE TO CONFIG ENVIRONMENT
 
-// if our custom environment vars aren't set, set them
-if (typeof (process.env.use) === 'undefined') {
-	const dotenv = require('dotenv'); // eslint-disable-line global-require
-	dotenv.config({ path: './.env' });
-}
+const dotenv = require('dotenv'); // eslint-disable-line global-require
+
+dotenv.config({ path: '../.env' });
 
 
 // ----- PULL IN OTHER MODULES, ROUTES
@@ -118,8 +116,7 @@ app.use(cookieParser());
 
 
 // SSL, LISTENING ---
-
-app.listen(process.env.httpPort, () => console.log(`Listening on port ${process.env.httpPort}`)); // eslint-disable-line no-console
+app.listen(process.env.apiHttpPort, () => console.log(`Listening on port ${process.env.apiHttpPort}`)); // eslint-disable-line no-console
 
 /*
 	// force SSL; that is, if request is not secure, redirect user to https
@@ -137,7 +134,7 @@ app.listen(process.env.httpPort, () => console.log(`Listening on port ${process.
 	};
 	// create a server, using Express app, that listens for insecure requests on 
 	// port specified in environment vars
-	http.createServer(app).listen(process.env.httpPort);
+	http.createServer(app).listen(process.env.apiHttpPort);
 	// create an SSL-secured server, using Express app, that listens for secure requests on 
 	// 		port 443; print confirmation so we know it started
 	https.createServer(options, app).listen(process.env.httpsPort, function () {
