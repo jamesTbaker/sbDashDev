@@ -10,7 +10,7 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: '../src/components.www/SBDash/SBDash.www.js',
+		index: './src/components.www/SBDash/SBDash.www.js',
 	},
 	output: {
 		path: path.join(__dirname, '../www/js'),
