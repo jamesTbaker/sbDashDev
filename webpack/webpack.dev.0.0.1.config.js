@@ -5,29 +5,29 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 // eslint-disable-next-line
 const HtmlWebpack = require('html-webpack-plugin');
-const baseConfig = require('./base.config.js');
+const baseConfig = require('./webpack.base.0.0.1.config.js');
 const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './hub.1.0.5/src/components/HcContainer/HcContainer.js',
+		index: '../src/components.www/SBDash/SBDash.www.js',
 	},
 	output: {
-		path: path.join(__dirname, '../hub.1.0.5/dist'),
-		filename: 'mos.1.0.5.dev.js',
+		path: path.join(__dirname, '../www/js'),
+		filename: 'sbDash.www.0.0.1.dev.js',
 	},
 	module: {
 		loaders: [
 			{
-				include: path.join(__dirname, '../hub.1.0.5/src'),
+				include: path.join(__dirname, '../src'),
 				test: /\.js$/,
 				loader: 'babel-loader',
 			}, {
-				include: path.join(__dirname, '../hub.1.0.5/src'),
+				include: path.join(__dirname, '../src'),
 				test: /\.sass$/,
 				loader: 'style-loader!css-loader!postcss-loader!sass-loader',
 			}, {
-				include: path.join(__dirname, '../hub.1.0.5/src'),
+				include: path.join(__dirname, '../src'),
 				test: /\.(jpg|png)$/,
 				use: {
 					loader: 'file-loader',
@@ -51,14 +51,14 @@ module.exports = merge(baseConfig, {
 	},
 	plugins: [
 		new HtmlWebpack({
-			template: path.join(__dirname, '../hub.1.0.5/src', 'index.html'),
+			template: path.join(__dirname, '../src', 'index.html'),
 			hash: true,
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
 	devtool: 'eval-source-map',
 	devServer: {
-		contentBase: path.join(__dirname, '../hub.1.0.5/dist'),
+		contentBase: path.join(__dirname, '../www/js'),
 		hot: true,
 		host: '192.168.0.15', // set to VirtualBox IP so it can be accessed outside VBox
 		port: 3001,
