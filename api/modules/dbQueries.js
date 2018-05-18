@@ -217,7 +217,7 @@ module.exports = {
 		})),
 
 
-	UpdateSpecificFieldInSpecificDocsInCollection: (
+	UpdateSpecificFieldInSpecificDocInCollection: (
 		collection,
 		docsSelectionFieldName,
 		docsSelectionFieldValue,
@@ -226,7 +226,7 @@ module.exports = {
 		changingFieldNewValue,
 	) =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// note: setObject MUST be constructed in the following way; 
 			// 		attempts to "optimize" the next two lines result in errors
 			const setObject = {};
@@ -236,44 +236,31 @@ module.exports = {
 			// 		attempts to "optimize" the next two lines result in errors
 			const selectionObject = {};
 			if (docsSelectorIsDocID) {
-				selectionObject[docsSelectionFieldName] = ObjectID(docsSelectionFieldValue);
+				selectionObject[docsSelectionFieldName] = new ObjectID(docsSelectionFieldValue);
 			} else {
 				selectionObject[docsSelectionFieldName] = docsSelectionFieldValue;
 			}
-
-
 			// use dbConnection object to query db
-			dbConnection.get(collection).update(
-				selectionObject,
-				{ $set: setObject },
-				(error, countsFromMonk) => {
-					// if there was an error
-					if (error) {
-						// construct a custom error
-						const errorToReport = {
-							error: true,
-							mongoDBError: true,
-							mongoDBErrorDetails: error,
-						};
-						// add error to Twitter
-						errors.ProcessError(errorToReport);
-						// reject this promise with the error
-						reject(errorToReport);
-						// if there was NOT an error
+			dbConnection.get(collection).findOneAndUpdate(selectionObject, { $set: setObject })
+				// when the operation completes
+				.then((updatedDoc) => {
+					// if the result contains a doc ID, indicating that a doc was updated
+					if (
+						updatedDoc &&
+						updatedDoc._id
+					) {
+						// resolve this promise with the updated doc
+						resolve(updatedDoc);
+					// if the result does not contain a doc ID, indicating that no doc was updated
 					} else {
-						// resolve the promise and return the counts of what happened
-						const docCounts = {};
-						if (countsFromMonk.n) { docCounts.matchedDocs = countsFromMonk.n; }
-						if (countsFromMonk.nModified) { docCounts.modifiedDocs = countsFromMonk.nModified; }
-						resolve({
-							error: false,
-							mongoDBError: false,
-							docCounts,
+						// reject this promise with an error
+						reject({
+							error: true,
+							updateError: true,
 						});
 					}
-				},
-			);
-		})),
+				});
+		}),
 
 
 	DeleteDocFromCollection: (docID, collection) => 

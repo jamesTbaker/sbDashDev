@@ -149,10 +149,6 @@ app.listen(process.env.apiHttpPort, () => console.log(`Listening on port ${proce
 app.use('/api/', indexRoute);
 app.use('/api/health', healthRoute);
 app.use('/api/error', errorsRoute);
-
-
-// route checked, not module
-
 app.use('/api/datesTimes', datesTimesRoute);
 
 // not checked

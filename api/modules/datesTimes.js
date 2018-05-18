@@ -56,7 +56,7 @@ module.exports = {
 			// if the promise is resolved with the settings
 				.then((postsSettings) => {
 					// iterate over the seasonal settings
-					postsSettings.scheduling.seasonal.forEach(({
+					postsSettings.postsSettings.scheduling.seasonal.forEach(({
 						name, friendlyName, seasonStartDateTime, seasonEndDateTime,
 					}, index) => {
 						// get the season's start and end datetimes
@@ -101,8 +101,8 @@ module.exports = {
 				// if the promise is resolved with the settings
 				.then((postsSettings) => {
 					// get datetime for start and end of posting window
-					const postingWindowStartDateTime = moment(`${today}T${postsSettings.scheduling.daily.dayStartTime}`).format();
-					const postingWindowEndDateTime = moment(`${today}T${postsSettings.scheduling.daily.dayEndTime}`).format();
+					const postingWindowStartDateTime = moment(`${today}T${postsSettings.postsSettings.scheduling.daily.dayStartTime}`).format();
+					const postingWindowEndDateTime = moment(`${today}T${postsSettings.postsSettings.scheduling.daily.dayEndTime}`).format();
 					// resolve with boolean: nowLocal is between posting window start and end datetimes
 					resolve(moment(nowLocal).isBetween(postingWindowStartDateTime, postingWindowEndDateTime));
 				})
@@ -123,7 +123,7 @@ module.exports = {
 				// if the promise is resolved with the docs, then resolve this promise with the docs
 				.then((postsSettings) => {
 					// get a promise to update the lastPostDateTime setting
-					dbQueries.UpdateSpecificFieldInSpecificDocsInCollection('postSettings', '_id', postsSettings._id, true, 'lastPostDateTime', nowLocal)
+					dbQueries.UpdateSpecificFieldInSpecificDocInCollection('postsSettings', '_id', postsSettings.postsSettings._id, true, 'lastPostDateTime', nowLocal)
 						// if the promise is resolved with the result, then resolve this promise with the result
 						.then((result) => { resolve(result); })
 						// if the promise is rejected with an error, then reject this promise with an error
@@ -141,7 +141,7 @@ module.exports = {
 				// if the promise is resolved with the current season
 				.then((currentPostSchedulingSeason) => {
 					// get a promise to retrieve all posts for the current season that aren't marked as posted
-					dbQueries.ReturnAllSpecifiedDocsFromCollection('posts', { $and: [{ season: currentPostSchedulingSeason.name }, { posted: { $ne: true } }] }, {})
+					dbQueries.ReturnAllSpecifiedDocsFromCollection('postsOptions', { $and: [{ season: currentPostSchedulingSeason.name }, { posted: { $ne: true } }] }, {})
 						// if the promise is resolved with the posts
 						.then((posts) => {
 							// resolve this promise with the quantity of the posts
@@ -165,60 +165,53 @@ module.exports = {
 					module.exports.ReturnCurrentPostSchedulingSeason()
 						// if the promise is resolved with the settings
 						.then((currentPostSchedulingSeasonResults) => {
-							// get promise to retrieve first document from lastPostDateTime collection
-							dbQueries.ReturnFirstDocFromCollection('lastPostDateTime')
-								// if the promise is resolved with the document
-								.then((lastPostDateTimeResult) => {                    
-									// get a promise to retrieve the quantity of posts ready for posting this season
-									module.exports.ReturnQuantityOfPostsReadyThisSeason()
-										// if the promise is resolved with the quantity
-										.then((quantityOfPostsReadyThisSeason) => {
-											// set up basic vars and do some calculations
-											const today = module.exports.ReturnTodayLocalUTCFormat();
-											const thisYear = module.exports.ReturnThisYearFourDigits();
-											const dailyPostSchedulingSettings = 
-												postsSettings.scheduling.daily;
-											const nowLocal = module.exports.ReturnNowLocalDateTimeUTCFormat();
-											const lastPostDateTime = lastPostDateTimeResult.docs.datetime;
-											const postingWindowStartDateTime = moment(`${today}T${dailyPostSchedulingSettings.dayStartTime}`);
-											const postingWindowEndDateTime = moment(`${today}T${dailyPostSchedulingSettings.dayEndTime}`);
-											const minutesInPostingWindow = postingWindowEndDateTime.diff(postingWindowStartDateTime, 'minutes');
-											const endDateThisPostSchedulingSeason = `${thisYear}-${currentPostSchedulingSeasonResults.seasonEndDateTime}:00${module.exports.ReturnCurrentLocalTimezoneOffset()}`;
-											const quantityDaysLeftInThisPostSchedulingSeason = 
-												moment(endDateThisPostSchedulingSeason).diff(moment(today), 'days') + 1; // the +1 is today
-											const quantityPostsReadyThisSeasonPerDaysLeftInThisSeason = 
-												quantityOfPostsReadyThisSeason / quantityDaysLeftInThisPostSchedulingSeason;
-											let quantityOfPostsPerDay = 
-												dailyPostSchedulingSettings.minimumQuantityOfPostsPerDay;
-											/**
-											 * if the number of posts remaining for this season  relative to 
-											 * the number of days remaining in the season is more than the 
-											 * minimum number of posts per day
-											 */
-											if ((quantityPostsReadyThisSeasonPerDaysLeftInThisSeason != null) && 
-												(quantityPostsReadyThisSeasonPerDaysLeftInThisSeason > 
-													dailyPostSchedulingSettings.minimumQuantityOfPostsPerDay)) {
-												// use the higher number of posts per day
-												quantityOfPostsPerDay = quantityPostsReadyThisSeasonPerDaysLeftInThisSeason;
-											}
-											const minutesBetweenPosts = 
-												Math.ceil(minutesInPostingWindow / quantityOfPostsPerDay);
-											const nextPostDateTime = moment(lastPostDateTime).add(minutesBetweenPosts, 'minutes').format();
-											// if it's later than nextPostDateTime
-											if (moment(nowLocal).isAfter(nextPostDateTime)) {
-												// resolve this promise with true
-												resolve(true);
-												// if it's NOT later than nextPostDateTime
-											} else {
-												// resolve this promise with false
-												resolve(false);
-											}
-										})
-										// if the promise is rejected with an error, 
-										// 		then reject this promise with the error
-										.catch((error) => { reject(error); });
+							// get a promise to retrieve the quantity of posts ready for posting this season
+							module.exports.ReturnQuantityOfPostsReadyThisSeason()
+								// if the promise is resolved with the quantity
+								.then((quantityOfPostsReadyThisSeason) => {
+									// set up basic vars and do some calculations
+									const today = module.exports.ReturnTodayLocalUTCFormat();
+									const thisYear = module.exports.ReturnThisYearFourDigits();
+									const dailyPostSchedulingSettings = 
+										postsSettings.postsSettings.scheduling.daily;
+									const nowLocal = module.exports.ReturnNowLocalDateTimeUTCFormat();
+									const { lastPostDateTime } = postsSettings.postsSettings;
+									const postingWindowStartDateTime = moment(`${today}T${dailyPostSchedulingSettings.dayStartTime}`);
+									const postingWindowEndDateTime = moment(`${today}T${dailyPostSchedulingSettings.dayEndTime}`);
+									const minutesInPostingWindow = postingWindowEndDateTime.diff(postingWindowStartDateTime, 'minutes');
+									const endDateThisPostSchedulingSeason = `${thisYear}-${currentPostSchedulingSeasonResults.seasonEndDateTime}:00${module.exports.ReturnCurrentLocalTimezoneOffset()}`;
+									const quantityDaysLeftInThisPostSchedulingSeason = 
+										moment(endDateThisPostSchedulingSeason).diff(moment(today), 'days') + 1; // the +1 is today
+									const quantityPostsReadyThisSeasonPerDaysLeftInThisSeason = 
+										quantityOfPostsReadyThisSeason / quantityDaysLeftInThisPostSchedulingSeason;
+									let quantityOfPostsPerDay = 
+										dailyPostSchedulingSettings.minimumQuantityOfPostsPerDay;
+									/**
+									 * if the number of posts remaining for this season  relative to 
+									 * the number of days remaining in the season is more than the 
+									 * minimum number of posts per day
+									 */
+									if ((quantityPostsReadyThisSeasonPerDaysLeftInThisSeason != null) && 
+										(quantityPostsReadyThisSeasonPerDaysLeftInThisSeason > 
+											dailyPostSchedulingSettings.minimumQuantityOfPostsPerDay)) {
+										// use the higher number of posts per day
+										quantityOfPostsPerDay = quantityPostsReadyThisSeasonPerDaysLeftInThisSeason;
+									}
+									const minutesBetweenPosts = 
+										Math.ceil(minutesInPostingWindow / quantityOfPostsPerDay);
+									const nextPostDateTime = moment(lastPostDateTime).add(minutesBetweenPosts, 'minutes').format();
+									// if it's later than nextPostDateTime
+									if (moment(nowLocal).isAfter(nextPostDateTime)) {
+										// resolve this promise with true
+										resolve(true);
+										// if it's NOT later than nextPostDateTime
+									} else {
+										// resolve this promise with false
+										resolve(false);
+									}
 								})
-								// if the promise is rejected with an error, then reject this promise with the error
+								// if the promise is rejected with an error, 
+								// 		then reject this promise with the error
 								.catch((error) => { reject(error); });
 						})
 						// if the promise is rejected with an error, then reject this promise with the error
