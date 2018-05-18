@@ -38,22 +38,23 @@ module.exports = {
 
 	ReturnOneRandomInSeasonPost: () => 
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to get current post scheduling season info
 			datesTimes.ReturnCurrentPostSchedulingSeason()
 				// if the promise is resolved with the info
 				.then((currentPostSchedulingSeasonInfo) => {
 					// get a promise to get a post from the database
 					dbQueries.ReturnOneRandomSampleFromSpecifiedDocsFromCollection('posts', { $and: [{ season: currentPostSchedulingSeasonInfo.name }, { posted: { $ne: true } }] })
-						// if the promise is resolved with the post info, then resolve this promise with the post info
-						.then((postInfo) => { resolve(postInfo) })
+						// if the promise is resolved with the post info, 
+						// 		then resolve this promise with the post info
+						.then((postInfo) => { resolve(postInfo); })
 						// if the promise is rejected with an error, then reject this promise with an error
 						.catch((error) => { reject(error); });
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
-		})
-	),
+		}),
+	
 
 	Post: () =>
 		// return a new promise
@@ -88,7 +89,8 @@ module.exports = {
 										// resolve this promise with the PostToTumblr result
 										resolve(result);
 									})
-									// if the promise is rejected with an error, then reject this promise with an error
+									// if the promise is rejected with an error, 
+									// 		then reject this promise with an error
 									.catch((error) => {
 										// get qty times this post has been involved in a posting error
 										let postErrorQuantity = 0;

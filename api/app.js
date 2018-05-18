@@ -154,6 +154,9 @@ app.use('/api/datesTimes', datesTimesRoute);
 // not checked
 
 app.use('/api/posts', postsRoute);
+
+// partially checked
+
 app.use('/api/sbTumblr', sbTumblrRoute);
 
 

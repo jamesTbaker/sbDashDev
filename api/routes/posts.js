@@ -3,6 +3,7 @@
 
 const express = require('express');
 const posts = require('../modules/posts');
+const httpAuth = require('../modules/httpAuth');
 
 const router = express.Router();
 
@@ -11,9 +12,16 @@ const router = express.Router();
 // GET ---
 
 router.get('/', (req, res, next) => {
-	posts.Post()
-		.then((result) => { res.json(result); })
-		.catch((error) => { res.json(error); });
+	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'))) {
+		posts.Post()
+			.then((result) => { res.json(result); })
+			.catch((error) => { res.json(error); });
+	} else {
+		res.json({
+			error: true,
+			authorizationError: true,
+		});
+	}
 });
 
 // ----- EXPORT EXPRESS ROUTER
