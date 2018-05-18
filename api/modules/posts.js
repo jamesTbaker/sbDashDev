@@ -32,6 +32,23 @@ module.exports = {
 		dbQueries.DeleteDocFromCollection(post._id, 'posts');
 	},
 
+	AddPostToQueueAndReturnID: post =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to add the post to the db
+			dbQueries.InsertDocIntoCollection(post, 'newQueue')
+				// if the promise is resolved with the result
+				.then((result) => {
+					resolve({
+						error: false,
+						docID: result._id,
+					});
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		}),
+
 	ReturnOneRandomInSeasonPost: () => 
 		// return a new promise
 		new Promise((resolve, reject) => {
