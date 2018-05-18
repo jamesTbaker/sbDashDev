@@ -141,7 +141,7 @@ module.exports = {
 				// if the promise is resolved with the current season
 				.then((currentPostSchedulingSeason) => {
 					// get a promise to retrieve all posts for the current season that aren't marked as posted
-					dbQueries.ReturnAllSpecifiedDocsFromCollection('postsOptions', { $and: [{ season: currentPostSchedulingSeason.name }, { posted: { $ne: true } }] }, {})
+					dbQueries.ReturnAllSpecifiedDocsFromCollection('postsQueue', { $and: [{ season: currentPostSchedulingSeason.name }, { posted: { $ne: true } }] }, {})
 						// if the promise is resolved with the posts
 						.then((posts) => {
 							// resolve this promise with the quantity of the posts

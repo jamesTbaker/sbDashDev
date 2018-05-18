@@ -21,13 +21,13 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
-	ReturnTumblrClient: tumblrSettings => tumblr.createClient({
-		consumer_key: tumblrSettings.tumblr.consumerKey,
-		consumer_secret: tumblrSettings.tumblr.consumerSecret,
-		token: tumblrSettings.tumblr.oauthToken,
-		token_secret: tumblrSettings.tumblr.oauthTokenSecret,
-	}),
-
+	ReturnTumblrClient: tumblrSettings => 
+		tumblr.createClient({
+			consumer_key: tumblrSettings.tumblr.consumerKey,
+			consumer_secret: tumblrSettings.tumblr.consumerSecret,
+			token: tumblrSettings.tumblr.oauthToken,
+			token_secret: tumblrSettings.tumblr.oauthTokenSecret,
+		}),
 
 	ReturnBlogInfo: () =>
 		// return a new promise

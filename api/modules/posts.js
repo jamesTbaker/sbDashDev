@@ -10,25 +10,21 @@ const sbTumblr = require('./sbTumblr');
 module.exports = {
 
 	UpdatePostPostedProperty: (post) => {
-		// overwrite property of copy of the in-memory post
-		const postToUse = post;
-		postToUse.posted = true;
-		// get a promise to overwrite the post in db, but don't wait for resolution
-		dbQueries.OverwriteDocInCollection(postToUse._id, postToUse, 'posts');
+		// get a promise to update post in db, but don't wait for resolution
+		dbQueries.UpdateSpecificFieldInSpecificDocInCollection('postsQueue', '_id', post._id, true, 'posted', true);
 	},
 
 	IncreasePostErrorQuantity: (post) => {
-		// copy / extract the actual post data for convenience
-		const postDataToUse = post.docs[0];
 		// get qty times this post has been involved in a posting error
-		let postErrorQuantity = 0;
-		if (typeof (postDataToUse.postErrorQuantity) !== 'undefined') {
-			postErrorQuantity = { postErrorQuantity };
-		}
-		// incrment error quantity and store back to in-memory post
-		postDataToUse.postErrorQuantity = postErrorQuantity + 1;
-		// get a promise to overwrite the post in db, but don't wait for resolution
-		dbQueries.OverwriteDocInCollection(postDataToUse._id, postDataToUse, 'posts');
+		let { postErrorQuantity } = post;
+		// this post has been involved in 1+ posting errors before
+		postErrorQuantity = postErrorQuantity ?
+			// increment error quantity
+			postErrorQuantity += 1 :
+			// otherwise, set error quantity to 1
+			1;
+		// get a promise to update post in db, but don't wait for resolution
+		dbQueries.UpdateSpecificFieldInSpecificDocInCollection('postsQueue', '_id', post._id, true, 'postErrorQuantity', postErrorQuantity);
 	},
 
 	DeletePost: (post) => {
@@ -44,7 +40,7 @@ module.exports = {
 				// if the promise is resolved with the info
 				.then((currentPostSchedulingSeasonInfo) => {
 					// get a promise to get a post from the database
-					dbQueries.ReturnOneRandomSampleFromSpecifiedDocsFromCollection('posts', { $and: [{ season: currentPostSchedulingSeasonInfo.name }, { posted: { $ne: true } }] })
+					dbQueries.ReturnOneRandomSampleFromSpecifiedDocsFromCollection('postsQueue', { $and: [{ season: currentPostSchedulingSeasonInfo.name }, { posted: { $ne: true } }] })
 						// if the promise is resolved with the post info, 
 						// 		then resolve this promise with the post info
 						.then((postInfo) => { resolve(postInfo); })
@@ -55,7 +51,6 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		}),
 	
-
 	Post: () =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
@@ -94,10 +89,17 @@ module.exports = {
 									.catch((error) => {
 										// get qty times this post has been involved in a posting error
 										let postErrorQuantity = 0;
-										if (typeof (error.post.docs[0].postErrorQuantity) !== 'undefined') {
+										if (
+											error &&
+											error.post &&
+											error.post.docs &&
+											error.post.docs[0] &&
+											error.post.docs[0].postErrorQuantity
+										) {
 											postErrorQuantity = { postErrorQuantity };
 										}
-										// if there have been 3+ errors (including this one)
+										// if there have at least 2 previous errors 
+										// 		(at least 3+ errors total, including this one)
 										if (postErrorQuantity >= 2) {
 											// delete the post
 											module.exports.DeletePost(error.post.docs[0]);
@@ -118,4 +120,6 @@ module.exports = {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		})),
+
+	
 };
