@@ -34,6 +34,12 @@
 		"react/prop-types": "off",
 		"jsx-a11y/alt-text": "off",
 		"no-trailing-spaces": "off",
+		"no-unused-expressions": [
+			"error",
+			{
+				"allowTaggedTemplates": true
+			}
+		],
 		"no-underscore-dangle": [
 			"error",
 			{

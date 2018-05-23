@@ -10,11 +10,11 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './src/components.www/SBDash/SBDash.www.js',
+		index: './src/components.www/SBMedia/SBMedia.Cont.www.js',
 	},
 	output: {
-		path: path.join(__dirname, '../www/js'),
-		filename: 'sbDash.www.0.0.1.dev.js',
+		path: path.join(__dirname, '../www'),
+		filename: 'SBMedia.www.0.0.1.dev.js',
 	},
 	module: {
 		loaders: [
@@ -39,7 +39,7 @@ module.exports = merge(baseConfig, {
 				},
 			},
 			{
-				test: /\.(ttf|eot|woff|woff2)$/,
+				test: /\.(ttf|eot|woff|woff2|svg)$/,
 				use: {
 					loader: 'file-loader',
 					options: {
