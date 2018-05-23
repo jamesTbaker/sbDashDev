@@ -14,9 +14,9 @@
 		]
 	},
 	"scripts": {
-		"build-dev": "NODE_ENV=development webpack --config webpack/webpack.dev.0.0.1.config.js",
-		"build-watch-dev": "NODE_ENV=development webpack --config webpack/webpack.dev.0.0.1.config.js --watch",
-		"serve-dev": "NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.0.0.1.config.js"
+		"build-dev": "webpack --config webpack/webpack.dev.0.0.1.config.js",
+		"build-watch-dev": "webpack --config webpack/webpack.dev.0.0.1.config.js --watch",
+		"serve-dev": "webpack-dev-server --config webpack/webpack.dev.0.0.1.config.js"
 	},
 	"repository": {
 		"type": "git",
