@@ -19,7 +19,8 @@ import LineAwesomeSVG from '../../fonts/line-awesome.svg';
 
 injectGlobal`
 	* { box-sizing: border-box; }
-	body { margin: 0; background-color: #222; color: #ddd} 
+	html { font-size: 10px; }
+	body { font-size: 1.6rem; margin: 0; background-color: #222; color: #ddd} 
 
 	@font-face {
 		font-family: 'LineAwesome';

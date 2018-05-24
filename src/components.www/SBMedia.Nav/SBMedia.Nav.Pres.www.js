@@ -3,11 +3,11 @@
 
 import * as React from 'react';
 import { Fixed, Flex } from 'rebass';
-import IconButton from '../IconButton/IconButton';
+import IconButton from '../SBMedia.IconButton/SBMedia.IconButton.Pres.www';
 
 // --- COMPONENT
 
-const SBMediaNav = props => (
+export default props => (
 	<Fixed
 		bottom={0}
 		right={0}
@@ -19,22 +19,26 @@ const SBMediaNav = props => (
 			justifyContent="space-between"
 		>
 			<IconButton
-				icon="iD"
+				iconContent="tachometer"
+				iconSize="2.2"
 				text="Dash"
 				clickHandler={props.handleButtonDashClick}
 			/>
 			<IconButton
-				icon="iB"
+				iconContent="list-ul"
+				iconSize="2.2"
 				text="Blogs"
 				clickHandler={props.handleButtonBlogsClick}
 			/>
 			<IconButton
-				icon="iS"
+				iconContent="user"
+				iconSize="2.2"
 				text="Skip Baker"
 				clickHandler={props.handleButtonSBClick}
 			/>
 			<IconButton
-				icon="iA"
+				iconContent="cog"
+				iconSize="2.2"
 				text="Administration"
 				clickHandler={props.handleButtonAdminClick}
 			/>
@@ -42,5 +46,3 @@ const SBMediaNav = props => (
 	</Fixed>
 
 );
-
-export default SBMediaNav;

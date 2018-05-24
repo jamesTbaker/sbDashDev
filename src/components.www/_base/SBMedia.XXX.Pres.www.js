@@ -5,8 +5,8 @@ import * as React from 'react';
 
 // --- COMPONENT
 
-const XXX = props => (
-	XXX
+export default props => (
+	<div>
+		XXX
+	</div>
 );
-
-export default XXX;
