@@ -16,11 +16,6 @@ module.exports = merge(baseConfig, {
 		path: path.join(__dirname, '../www'),
 		filename: 'SBMedia.www.0.0.1.dev.js',
 	},
-	resolve: {
-		alias: {
-			'fairhaven-design': path.join(__dirname, 'fairhaven-design'),
-		},
-	},
 	module: {
 		loaders: [
 			{
@@ -42,7 +37,8 @@ module.exports = merge(baseConfig, {
 						publicPath: 'img/',
 					},
 				},
-			}, {
+			},
+			{
 				test: /\.(ttf|eot|woff|woff2|svg)$/,
 				use: {
 					loader: 'file-loader',
@@ -60,6 +56,7 @@ module.exports = merge(baseConfig, {
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
+	devtool: 'eval-source-map',
 	devServer: {
 		contentBase: path.join(__dirname, '../www/js'),
 		hot: true,

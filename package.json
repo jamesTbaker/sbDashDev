@@ -14,9 +14,10 @@
 		]
 	},
 	"scripts": {
-		"build-dev": "webpack --config webpack/webpack.dev.0.0.1.config.js",
-		"build-watch-dev": "webpack --config webpack/webpack.dev.0.0.1.config.js --watch",
-		"serve-dev": "webpack-dev-server --config webpack/webpack.dev.0.0.1.config.js"
+		"sb-dev-build": "webpack --config webpack/webpack.dev.0.0.1.config.js",
+		"sb-dev-build-watch": "webpack --config webpack/webpack.dev.0.0.1.config.js --watch",
+		"sb-dev-serve": "webpack-dev-server --config webpack/webpack.dev.0.0.1.config.js",
+		"fd-dev-serve": "webpack-dev-server --config webpack/webpack.fds.dev.0.0.1.config.js"
 	},
 	"repository": {
 		"type": "git",
@@ -71,6 +72,7 @@
 		"shortid": "^2.2.8",
 		"style-loader": "^0.18.2",
 		"styled-components": "^3.2.6",
+		"styled-icons": "^2.2.0",
 		"tumblr.js": "^1.1.1",
 		"twitter": "^1.7.1",
 		"webpack": "^3.1.0",

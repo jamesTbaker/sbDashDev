@@ -10,29 +10,25 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './src/components.www/SBMedia/SBMedia.Cont.www.js',
+		index: './fairhaven-design/docs/entry.js',
 	},
 	output: {
-		path: path.join(__dirname, '../www'),
-		filename: 'SBMedia.www.0.0.1.dev.js',
+		path: path.join(__dirname, '../fairhaven-design/dist'),
+		filename: 'fairhaven.www.0.0.1.dev.js',
 	},
 	resolve: {
 		alias: {
-			'fairhaven-design': path.join(__dirname, 'fairhaven-design'),
+			'fairhaven-design': path.join(__dirname, '../fairhaven-design/src'),
 		},
 	},
 	module: {
 		loaders: [
 			{
-				include: path.join(__dirname, '../src'),
+				include: path.join(__dirname, '../fairhaven-design/docs'),
 				test: /\.js$/,
 				loader: 'babel-loader',
 			}, {
-				include: path.join(__dirname, '../src'),
-				test: /\.sass$/,
-				loader: 'style-loader!css-loader!postcss-loader!sass-loader',
-			}, {
-				include: path.join(__dirname, '../src'),
+				include: path.join(__dirname, '../fairhaven-design/docs'),
 				test: /\.(jpg|png)$/,
 				use: {
 					loader: 'file-loader',
@@ -43,6 +39,7 @@ module.exports = merge(baseConfig, {
 					},
 				},
 			}, {
+				include: path.join(__dirname, '../fairhaven-design/docs'),
 				test: /\.(ttf|eot|woff|woff2|svg)$/,
 				use: {
 					loader: 'file-loader',
@@ -55,15 +52,15 @@ module.exports = merge(baseConfig, {
 	},
 	plugins: [
 		new HtmlWebpack({
-			template: path.join(__dirname, '../src', 'index.html'),
+			template: path.join(__dirname, '../fairhaven-design/docs', 'index.html'),
 			hash: true,
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
 	devServer: {
-		contentBase: path.join(__dirname, '../www/js'),
+		contentBase: path.join(__dirname, '../fairhaven-design/docs'),
 		hot: true,
 		host: '192.168.0.15', // set to VirtualBox IP so it can be accessed outside VBox
-		port: 4001,
+		port: 5001,
 	},
 });
