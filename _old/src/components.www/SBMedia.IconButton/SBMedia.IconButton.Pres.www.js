@@ -5,7 +5,7 @@ import * as React from 'react';
 import { ButtonTransparent } from 'rebass';
 import styled from 'styled-components';
 import Icon from '../SBMedia.Icon/SBMedia.Icon.Pres.www';
-import StylePatterns from '../../styles/SBMedia.StylePatterns';
+// import StylePatterns from '../../styles/SBMedia.StylePatterns';
 
 // --- COMPONENT
 

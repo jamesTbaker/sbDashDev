@@ -65,7 +65,6 @@
 		"react": "^16.0.0",
 		"react-dom": "^16.0.0",
 		"react-responsive": "^4.1.0",
-		"rebass": "^2.0.0-2",
 		"sass-lint": "^1.12.1",
 		"sass-loader": "^6.0.6",
 		"serve-favicon": "~2.4.2",
