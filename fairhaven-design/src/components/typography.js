@@ -12,7 +12,6 @@ import {
 	mb3,
 	ml3,
 	i,
-	fw4,
 	fw5,
 	fw6,
 } from 'styled-components-mixins/tachyons';
@@ -52,7 +51,6 @@ export const H1 = styled.h1`
 	${mb1}
 	${fw6}
 `;
-
 export const H2 = styled.h2`
 	${fs2}
 	${lh_title}
@@ -60,15 +58,13 @@ export const H2 = styled.h2`
 	${mb1}
 	${fw5}
 `;
-
 export const H3 = styled.h3`
 	${fs3}
 	${lh_title}
 	${mt3}
 	${mb1}
-	${fw4}
+	${fw5}
 `;
-
 export const H4 = styled.h4`
 	${fs4}
 	${lh_title}
@@ -76,7 +72,6 @@ export const H4 = styled.h4`
 	${mb1}
 	${fw5}
 `;
-
 export const H5 = styled.h5`
 	${fs5}
 	${lh_title}
@@ -84,7 +79,6 @@ export const H5 = styled.h5`
 	${mb1}
 	${fw5}
 `;
-
 export const H6 = styled.h6`
 	${fs5}
 	${lh_title}
@@ -106,16 +100,13 @@ export const UlUnbulleted = styled.ul`
 	${mt3}
 	${mb3}
 `;
-
 export const UlUnbulletedNested = styled.ul`
 	${mt3}
 	${mb0}
 `;
-
 export const LiUnbulleted = styled.li`
 	${mb3}
 `;
-
 export const LiUnbulletedNested = styled.li`
 	${mb3}
 	${ml3}
@@ -127,22 +118,18 @@ export const LiUnbulletedNested = styled.li`
 export const UlBulleted = styled.ul`
 	${mb2}
 `;
-
 export const UlBulletedNested = styled.ul`
 	${mb0}
 `;
-
 export const LiBulleted = styled.li`
 	${mb2}
 	${ml3}
 	list-style-position: outside;
 	list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAIElEQVQoU2NkIAAY09LS/qOrmTVrFiNMbFAoIOgLQgoAA4QUCSjONAIAAAAASUVORK5CYII=');
 `;
-
 export const LiBulletedNested = styled.li`
 	${mb2}
 	${ml3}
 	list-style-position: outside;
 	list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAATElEQVQoU2NkIAAYQfIzZ878f//+fQZFRUWG9PR0sBgMMIIkz549CxcwNjZGUcRYUVHx/927d3AFQkJCDB0dHXBTCJtA0A1E+QKfIgBQeyMJtPI08AAAAABJRU5ErkJggg==');
 `;
-
