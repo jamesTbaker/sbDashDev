@@ -7,6 +7,7 @@ import { injectGlobal } from 'styled-components';
 import reset from 'styled-reset';
 import { lh_copy, fw4 } from 'styled-components-mixins/tachyons';
 import { baseFontSizeInPx, fs5 } from './typography';
+import { ReturnTextColor, ReturnSolidBackgroundColor } from './colors';
 
 // --- BASE STYLES
 
@@ -21,7 +22,7 @@ export const baseStyles = () => injectGlobal`
 		${fw4}
 		${lh_copy}
 
-		background-color: white;
-		color: #333
+		${ReturnSolidBackgroundColor('white', 0)};
+		${ReturnTextColor('gray', 80)};
 	} 
 `;

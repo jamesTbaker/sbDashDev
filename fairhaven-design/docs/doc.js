@@ -24,7 +24,7 @@ const Doc = () => {
 				fake tan wellies biscuits naff off.
 			</Fh.P>
 			<Fh.P>
-				Houlligan pigeons in Trafalgar Square fancied 
+				<Fh.BasicLink>Houlligan pigeons in Trafalgar</Fh.BasicLink> Square fancied 
 				a flutter the old bill. Nigh what a mug teacakes the black death Prince Charles 
 				collywobbles nuthouse, numpty Geordie absolute full English breakast I bid you good 
 				day tally-ho bargain Betty.
@@ -36,7 +36,7 @@ const Doc = () => {
 				cheesed off, flog a dead horse bent as a nine bob note red telephone box ey up duck 
 				bent as a nine bob note.
 			</Fh.P>
-			<Fh.H2>A Double Dutch Chav Whizz Yorkshire Pudding Twiglets Stew and Dumps</Fh.H2>
+			<Fh.H2>A Double Dutch Chav Whizz Yorkshire Pudding</Fh.H2>
 			<Fh.P>
 				Pommy ipsum bit of a Jack the lad a diamond geezer sorted it man and his whippet,
 				fake tan wellies biscuits naff off, houlligan pigeons in Trafalgar Square fancied

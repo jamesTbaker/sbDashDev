@@ -12,11 +12,12 @@ import {
 	mb3,
 	ml3,
 	i,
+	fw4,
 	fw5,
 	fw6,
 } from 'styled-components-mixins/tachyons';
 
-// --- TYPE STYLES
+// --- TYPOGRAPHIC COMPONENTS
 
 // bases
 export const baseFontSizeInPx = 16;
@@ -45,11 +46,11 @@ export const fs8 = [`font-size: ${baseFontSizeMultiplier * 0.579}rem;`];
 // headers
 
 export const H1 = styled.h1`
-	${fs1}
+	${fs2}
 	${lh_title}
 	${mt3}
 	${mb1}
-	${fw5}
+	${fw6}
 `;
 
 export const H2 = styled.h2`
@@ -65,7 +66,7 @@ export const H3 = styled.h3`
 	${lh_title}
 	${mt3}
 	${mb1}
-	${fw5}
+	${fw4}
 `;
 
 export const H4 = styled.h4`
@@ -81,7 +82,7 @@ export const H5 = styled.h5`
 	${lh_title}
 	${mt2}
 	${mb1}
-	${fw6}
+	${fw5}
 `;
 
 export const H6 = styled.h6`
@@ -89,7 +90,7 @@ export const H6 = styled.h6`
 	${lh_title}
 	${mt2}
 	${mb1}
-	${fw6}
+	${fw5}
 	${i}
 `;
 
