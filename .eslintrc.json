@@ -33,6 +33,8 @@
 		"react/jsx-indent": "off",
 		"react/prop-types": "off",
 		"jsx-a11y/alt-text": "off",
+		"prefer-default-export": "off",
+		"camelcase": "off",
 		"no-trailing-spaces": "off",
 		"no-unused-expressions": [
 			"error",

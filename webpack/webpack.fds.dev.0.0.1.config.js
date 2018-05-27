@@ -10,7 +10,7 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './fairhaven-design/docs/entry.js',
+		index: './fairhaven-design/docs/doc.js',
 	},
 	output: {
 		path: path.join(__dirname, '../fairhaven-design/dist'),
