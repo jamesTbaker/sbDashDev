@@ -16,10 +16,11 @@ import { ReturnBackgroundColorTransition } from './transitions';
 // icon
 
 const StyledButton = styled.button`
+	${Tc.fw4}
 	${Tc.pv2}
-	${Tc.ph3}
+	${Tc.ph4}
 	${Tc.bn}
-	${Tc.br1}
+	${Tc.br2}
 	${ReturnBackgroundColorTransition()}
 	${RetrunInteractiveInactiveBackground()}
 	&:hover {
