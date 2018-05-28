@@ -6,14 +6,7 @@ import ReactDOM from 'react-dom';
 // eslint-disable-next-line
 import * as Fh from 'fairhaven-design';
 import styled from 'styled-components';
-import {
-	lh_title,
-	mt3,
-	mb1,
-	mb3,
-	pa4,
-	fw3,
-} from 'styled-components-mixins/tachyons';
+import * as Tc from 'styled-components-mixins/tachyons';
 import FhColorList from './components/Fh.ColorList';
 import FhColorItem from './components/Fh.ColorItem';
 
@@ -24,32 +17,33 @@ const ibmColors = require('ibm-design-colors/ibm-colors.json');
 const ibmColorsObjectKeys = Object.keys(ibmColors);
 
 const DocContainer = styled.main`
-	${pa4}
+	${Tc.pa4}
 `;
 const DocTitle = styled.h1`
 	${Fh.fs2}
-	${lh_title}
-	${mt3}
-	${mb3}
-	${fw3}
+	${Tc.lh_title}
+	${Tc.mt3}
+	${Tc.mb3}
+	${Tc.fw3}
 `;
 const SectionContainer = styled.section`
 	border-top: 1px solid ${Fh.ReturnColor('gray', 10)};
+	${Tc.pb2}
 `;
 const SectionTitle = styled.h2`
 	${Fh.fs3}
-	${lh_title}
-	${mt3}
-	${mb1}
-	${fw3}
+	${Tc.lh_title}
+	${Tc.mt3}
+	${Tc.mb1}
+	${Tc.fw3}
 `;
 
 const ColorItemHeader = styled.h3`
 	${Fh.fs4}
-	${lh_title}
-	${mt3}
-	${mb1}
-	${fw3}
+	${Tc.lh_title}
+	${Tc.mt3}
+	${Tc.mb1}
+	${Tc.fw3}
 `;
 
 class Doc extends React.Component {
@@ -69,6 +63,10 @@ class Doc extends React.Component {
 					<SectionTitle>
 						Form Elements
 					</SectionTitle>
+					<Fh.Icon
+						package="Material"
+						name="FeaturedPlayList"
+					/>
 					<Fh.Button 
 						text="Hello2"
 						handleButtonClick={this.handleButtonClick}

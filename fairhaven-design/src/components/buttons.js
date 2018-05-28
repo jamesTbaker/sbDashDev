@@ -8,19 +8,22 @@ import { RetrunInteractiveInactiveBackground, RetrunInteractiveActiveBackground 
 import { ReturnBackgroundColorTransition } from './transitions';
 
 
-// --- LINK COMPONENTS
+// --- BUTTON COMPONENT
 
 // on click handler
 // text visible
 // text caps
 // icon
+// quiet
 
 const StyledButton = styled.button`
 	${Tc.fw4}
 	${Tc.pv2}
-	${Tc.ph4}
+	${Tc.ph3}
 	${Tc.bn}
-	${Tc.br2}
+	${Tc.br1}
+	${Tc.flex}
+	${Tc.tc}
 	${ReturnBackgroundColorTransition()}
 	${RetrunInteractiveInactiveBackground()}
 	&:hover {
