@@ -24,29 +24,9 @@ module.exports = merge(baseConfig, {
 	module: {
 		loaders: [
 			{
-				include: path.join(__dirname, '../fairhaven-design/docs'),
+				include: path.join(__dirname, '../fairhaven-design'),
 				test: /\.js$/,
 				loader: 'babel-loader',
-			}, {
-				include: path.join(__dirname, '../fairhaven-design/docs'),
-				test: /\.(jpg|png)$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						name: '[name].[ext]',
-						outputPath: 'img/',
-						publicPath: 'img/',
-					},
-				},
-			}, {
-				include: path.join(__dirname, '../fairhaven-design/docs'),
-				test: /\.(ttf|eot|woff|woff2|svg)$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						name: 'fonts/[name].[ext]',
-					},
-				},
 			},
 		],
 	},
