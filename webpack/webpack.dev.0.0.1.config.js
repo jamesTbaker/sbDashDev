@@ -10,29 +10,24 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './src/components.www/SBMedia/SBMedia.Cont.www.js',
+		index: './app/src/components.www/SBMedia/SBMedia.Cont.www.js',
 	},
 	output: {
-		path: path.join(__dirname, '../www'),
+		path: path.join(__dirname, '../app/www'),
 		filename: 'SBMedia.www.0.0.1.dev.js',
-	},
-	resolve: {
-		alias: {
-			'fairhaven-design': path.join(__dirname, 'fairhaven-design'),
-		},
 	},
 	module: {
 		loaders: [
 			{
-				include: path.join(__dirname, '../src'),
+				include: path.join(__dirname, '../app/src'),
 				test: /\.js$/,
 				loader: 'babel-loader',
 			}, {
-				include: path.join(__dirname, '../src'),
+				include: path.join(__dirname, '../app/src'),
 				test: /\.sass$/,
 				loader: 'style-loader!css-loader!postcss-loader!sass-loader',
 			}, {
-				include: path.join(__dirname, '../src'),
+				include: path.join(__dirname, '../app/src'),
 				test: /\.(jpg|png)$/,
 				use: {
 					loader: 'file-loader',
@@ -55,13 +50,14 @@ module.exports = merge(baseConfig, {
 	},
 	plugins: [
 		new HtmlWebpack({
-			template: path.join(__dirname, '../src', 'index.html'),
+			template: path.join(__dirname, '../app/src', 'index.html'),
 			hash: true,
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
+	devtool: 'eval-source-map',
 	devServer: {
-		contentBase: path.join(__dirname, '../www/js'),
+		contentBase: path.join(__dirname, '../app/www/js'),
 		hot: true,
 		host: '192.168.0.15', // set to VirtualBox IP so it can be accessed outside VBox
 		port: 4001,

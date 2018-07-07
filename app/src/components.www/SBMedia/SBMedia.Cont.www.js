@@ -4,10 +4,6 @@
 import { injectGlobal } from 'styled-components';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Provider } from 'rebass';
-
-import SBMediaTheme from '../../theme/SBMedia.Theme';
-
 import SBMediaNav from '../SBMedia.Nav/SBMedia.Nav.Pres.www';
 
 import LineAwesomeEOT from '../../fonts/line-awesome.eot';
@@ -21,7 +17,6 @@ injectGlobal`
 	* { box-sizing: border-box; }
 	html { font-size: 10px; }
 	body { font-size: 1.6rem; margin: 0; background-color: #222; color: #ddd} 
-
 	@font-face {
 		font-family: 'LineAwesome';
 		src: url(${LineAwesomeEOT});
@@ -33,7 +28,6 @@ injectGlobal`
 		font-weight: normal;
 		font-style: normal;
 	}
-
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		@font-face {
 			font-family: "LineAwesome";
@@ -93,9 +87,7 @@ export default class SBDashApp extends React.Component {
 	}
 	render() {
 		return (
-			<Provider
-				theme={SBMediaTheme}
-			>
+			<div id="SBMedia-app-container">
 				{
 					this.state.showScreenDash &&
 
@@ -122,7 +114,7 @@ export default class SBDashApp extends React.Component {
 					handleButtonSBClick={this.handleButtonSBClick}
 					handleButtonAdminClick={this.handleButtonAdminClick}
 				/>
-			</Provider>
+			</div>
 		);
 	}
 }
