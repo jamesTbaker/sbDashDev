@@ -159,7 +159,7 @@ module.exports = {
 							(tumblrError, tumblrResponse) => {
 								// if Tumblr didn't return an error, resolve this promise with the posts data
 								if (!tumblrError) {
-									resolve({ error: false, blogAvatarURL: tumblrResponse });
+									resolve({ error: false, dashPosts: tumblrResponse });
 								} else {
 									reject({ error: true, tumblrError });
 								}
