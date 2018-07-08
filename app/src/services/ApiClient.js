@@ -8,7 +8,7 @@ export default class ApiClient {
 			// get a promise to retrieve the data
 			axios.get(endpoint)
 				// if the promise is resolved with the data, then resolve this promise with the data
-				.then((result) => { resolve(result); })
+				.then((result) => { console.log('result'); console.log(result); resolve(result); })
 				// if the promise is rejected with an error
 				.catch((returnedError) => {
 					// reject this promise with an error

@@ -16,7 +16,7 @@
 	"scripts": {
 		"sb-dev-build": "webpack --config webpack/webpack.dev.0.0.1.config.js",
 		"sb-dev-build-watch": "webpack --config webpack/webpack.dev.0.0.1.config.js --watch",
-		"sb-dev-serve": "webpack-dev-server --config webpack/webpack.dev.0.0.1.config.js",
+		"sb-dev-serve": "use=dev webpack-dev-server --config webpack/webpack.dev.0.0.1.config.js",
 		"fd-dev-serve": "webpack-dev-server --config webpack/webpack.fds.dev.0.0.1.config.js"
 	},
 	"repository": {

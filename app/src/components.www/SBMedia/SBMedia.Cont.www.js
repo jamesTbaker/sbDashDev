@@ -5,6 +5,7 @@ import { injectGlobal } from 'styled-components';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import SBMediaNav from '../SBMedia.Nav/SBMedia.Nav.Pres.www';
+import Dash from '../SBMedia.Dash/SBMedia.Dash.Cont.www';
 
 import LineAwesomeEOT from '../../fonts/line-awesome.eot';
 import LineAwesomeTTF from '../../fonts/line-awesome.ttf';
@@ -91,7 +92,7 @@ export default class SBDashApp extends React.Component {
 				{
 					this.state.showScreenDash &&
 
-					<p>Dash</p>
+					<Dash />
 				}
 				{
 					this.state.showScreenBlogs &&
