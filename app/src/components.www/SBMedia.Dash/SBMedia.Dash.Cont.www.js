@@ -23,13 +23,7 @@ export default class SBMediaDashContainer extends React.Component {
 			.then((returnedDashPosts) => {				
 				this.setState((prevState) => {
 					const previousPostsArray = prevState.dashPosts;
-					const currentPostsArray = [...previousPostsArray, returnedDashPosts];
-					console.log('value');
-					console.log(value);
-					console.log('value');
-					console.log(value);
-					console.log('value');
-					console.log(value);
+					const currentPostsArray = [...previousPostsArray, ...returnedDashPosts];
 					return {
 						dashPosts: currentPostsArray,
 					};
