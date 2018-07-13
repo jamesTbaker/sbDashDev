@@ -21,7 +21,7 @@ const ButtonBase = styled.button`
 	background-color: ${props => props.defaultBackgroundColor};
 	color: ${props => props.defaultContentColor};
 	cursor: pointer;
-	transition: color ${StylePatterns.ReturnStandardTransitionTime()}, background-color ${StylePatterns.ReturnStandardTransitionTime()};
+	transition: color ${StylePatterns.StandardTransitionTime()}, background-color ${StylePatterns.StandardTransitionTime()};
 
 	&:hover {
 		background-color: ${props => props.activeBackgroundColor};
@@ -38,7 +38,7 @@ const VisibleTextWrapper = styled.span`
 `;
 
 const InvisibleTextWrapper = styled.span`
-	${StylePatterns.ReturnInlineHidden()}
+	${StylePatterns.InlineHidden()}
 `;
 
 export default props => (

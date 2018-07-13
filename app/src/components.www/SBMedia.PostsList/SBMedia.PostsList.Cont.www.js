@@ -2,9 +2,16 @@
 // --- IMPORTS
 
 import * as React from 'react';
+import styled from 'styled-components';
 import Post from '../SBMedia.Post/SBMedia.Post.Pres.www';
 
 // --- COMPONENT
+
+const PostList = styled.ul`
+	list-style: none;
+	padding: 0;
+	margin: 0;
+`;
 
 export default class PostsList extends React.Component {
 	constructor(props) {
@@ -18,7 +25,7 @@ export default class PostsList extends React.Component {
 		// console.log(this.props.posts);
 		if (this.props.posts && this.props.posts[0]) {
 			return (
-				<ul>
+				<PostList>
 					{
 						this.props.posts.map(postValue => (
 							<Post
@@ -27,7 +34,7 @@ export default class PostsList extends React.Component {
 							/>
 						))
 					}
-				</ul>
+				</PostList>
 			);
 		}
 		return (

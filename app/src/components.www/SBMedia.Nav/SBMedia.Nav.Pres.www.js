@@ -5,16 +5,18 @@ import * as React from 'react';
 import Button from '../SBMedia.Button/SBMedia.Button.Pres.www';
 import FixedContainer from '../SBMedia.FixedContainer/SBMedia.FixedContainer.Pres.www';
 import FlexContainer from '../SBMedia.FlexContainer/SBMedia.FlexContainer.Pres.www';
+import StylePatterns from '../SBMedia.StylePatterns/SBMedia.StylePatterns.Data';
 
 // --- COMPONENT
 
 export default props => (
 	<FixedContainer
-		bottom={0}
-		right={0}
-		left={0}
+		bottom="0"
+		right="0"
+		left="0"
 		padding="1rem 0"
 		margin="0"
+		backgroundColor={StylePatterns.Color('blue1')}
 	>
 		<FlexContainer
 			justifyContent="space-around"
@@ -26,9 +28,9 @@ export default props => (
 				text="Dash"
 				textInvisible
 				defaultBackgroundColor="transparent"
-				defaultContentColor="#97faf2"
+				defaultContentColor={StylePatterns.Color('red5')}
 				activeBackgroundColor="transparent"
-				activeContentColor="#73a7b5"
+				activeContentColor={StylePatterns.Color('red3')}
 				clickHandler={props.handleButtonDashClick}
 			/>
 			<Button
@@ -38,9 +40,9 @@ export default props => (
 				text="Blogs"
 				textInvisible
 				defaultBackgroundColor="transparent"
-				defaultContentColor="#97faf2"
+				defaultContentColor={StylePatterns.Color('red5')}
 				activeBackgroundColor="transparent"
-				activeContentColor="#73a7b5"
+				activeContentColor={StylePatterns.Color('red3')}
 				clickHandler={props.handleButtonBlogsClick}
 			/>
 			<Button
@@ -50,9 +52,9 @@ export default props => (
 				text="Skip Baker"
 				textInvisible
 				defaultBackgroundColor="transparent"
-				defaultContentColor="#97faf2"
+				defaultContentColor={StylePatterns.Color('red5')}
 				activeBackgroundColor="transparent"
-				activeContentColor="#73a7b5"
+				activeContentColor={StylePatterns.Color('red3')}
 				clickHandler={props.handleButtonSBClick}
 			/>
 			<Button
@@ -62,12 +64,11 @@ export default props => (
 				text="Administration"
 				textInvisible
 				defaultBackgroundColor="transparent"
-				defaultContentColor="#97faf2"
+				defaultContentColor={StylePatterns.Color('red5')}
 				activeBackgroundColor="transparent"
-				activeContentColor="#73a7b5"
+				activeContentColor={StylePatterns.Color('red3')}
 				clickHandler={props.handleButtonAdminClick}
 			/>
 		</FlexContainer>
 	</FixedContainer>
-
 );
