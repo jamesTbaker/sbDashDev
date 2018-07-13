@@ -2,7 +2,7 @@
 // --- IMPORTS
 
 import * as React from 'react';
-import Post from '../SBMedia.Post/SBMedia.Post.Cont.www';
+import Post from '../SBMedia.Post/SBMedia.Post.Pres.www';
 
 // --- COMPONENT
 
