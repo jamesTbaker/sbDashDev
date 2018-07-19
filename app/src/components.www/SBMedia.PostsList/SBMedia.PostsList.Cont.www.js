@@ -17,9 +17,18 @@ export default class PostsList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			XXX: true,
+			postOptionsSelected: [],
 		};
-		// this.XXX = this.XXX.bind(this);
+		this.handleClickPost = this.handleClickPost.bind(this);
+	}
+	handleClickPost() {
+		
+	}
+	addPost() {
+
+	}
+	deletePost() {
+
 	}
 	render() {
 		// console.log(this.props.posts);

@@ -12,7 +12,7 @@ export default class SBMediaDashContainer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dashPosts: [],
+			postOptions: [],
 			dashPostsQuantityRequested: 0,
 		};
 		// this.XXX = this.XXX.bind(this);
@@ -20,23 +20,23 @@ export default class SBMediaDashContainer extends React.Component {
 	componentDidMount() {
 		// get a promise to return a batch of dashboard posts
 		DashData.ReturnDashboardPosts(this.state.dashPostsQuantityRequested)
-			.then((returnedDashPosts) => {				
+			.then((returnedPostOptions) => {
 				this.setState((prevState) => {
-					const previousPostsArray = prevState.dashPosts;
-					const currentPostsArray = [...previousPostsArray, ...returnedDashPosts];
+					const previousPostOptionsArray = prevState.postOptions;
+					const currentPostOptionsArray = [...previousPostOptionsArray, ...returnedPostOptions];
 					return {
-						dashPosts: currentPostsArray,
+						postOptions: currentPostOptionsArray,
 					};
 				});
 			});
 	}
 	render() {
 		// console.log('rendering dash');
-		// console.log(this.state.dashPosts);
+		// console.log(this.state.postOptions);
 		return (
 			<div>
 				<PostsList
-					posts={this.state.dashPosts}
+					posts={this.state.postOptions}
 				/>
 			</div>
 		);
