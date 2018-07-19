@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import styled from 'styled-components';
-import Post from '../SBMedia.Post/SBMedia.Post.Pres.www';
+import PostOption from '../SBMedia.PostOption/SBMedia.PostOption.Pres.www';
 
 // --- COMPONENT
 
@@ -17,18 +17,52 @@ export default class PostsList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			postOptionsSelected: [],
+			postOptionsSelected: [
+				{
+					tumblrID: 175656834461,
+					mongoID: 175656834461,
+				}, {
+					tumblrID: 175656586575,
+					mongoID: 175656586575,
+				},
+			],
 		};
-		this.handleClickPost = this.handleClickPost.bind(this);
+		this.handlePostOptionClick = this.handlePostOptionClick.bind(this);
 	}
-	handleClickPost() {
-		
+	returnThisTumblrIDInThisElement(tumblrID, arrayElement) {
+		return arrayElement.tumblrID === tumblrID;
 	}
-	addPost() {
-
+	returnPostOptionIsSelected(tumblrID) {
+		let selected = false;
+		this.state.postOptionsSelected.forEach((selectedOption) => {
+			if (this.returnThisTumblrIDInThisElement(tumblrID, selectedOption)) {
+				selected = true;
+			}
+		});
+		return selected;
 	}
-	deletePost() {
-
+	handlePostOptionClick(tumblrID, selected) {
+		if (selected) {
+			this.deletePostOptionFromDatabase(tumblrID);
+		} else {
+			this.addPostOptionToDatabaseAndState(tumblrID);
+		}
+	}
+	addPostOptionToDatabaseAndState(tumblrID) {
+		this.addPostOptionToDatabase(tumblrID);
+		this.addPostOptionToState(tumblrID);
+	}
+	addPostOptionToDatabase(tumblrID) {
+		console.log('addPostOptionToDatabase');
+		console.log(tumblrID);
+	}
+	addPostOptionToState(tumblrID, mongoID) {
+		console.log('addPostOptionToState');
+		console.log(tumblrID);
+	}
+	deletePostOptionFromDatabase(tumblrID) {
+		console.log('deletePostOptionToDatabase');
+		console.log(tumblrID);
 	}
 	render() {
 		// console.log(this.props.posts);
@@ -37,9 +71,11 @@ export default class PostsList extends React.Component {
 				<PostList>
 					{
 						this.props.posts.map(postValue => (
-							<Post
+							<PostOption
 								key={postValue.id}
-								postContent={postValue}
+								postOptionContent={postValue}
+								postOptionSelected={this.returnPostOptionIsSelected(postValue.id)}
+								handlePostOptionClick={this.handlePostOptionClick}
 							/>
 						))
 					}
