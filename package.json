@@ -65,6 +65,7 @@
 		"oauth": "^0.9.15",
 		"postcss-loader": "^2.1.4",
 		"pug": "^2.0.3",
+		"qs": "^6.5.2",
 		"react": "^16.0.0",
 		"react-accessible-accordion": "^2.4.3",
 		"react-dom": "^16.0.0",

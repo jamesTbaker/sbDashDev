@@ -111,8 +111,8 @@ app.set('view engine', 'pug');
 
 // PARSING ---
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
@@ -150,13 +150,7 @@ app.use('/api/', indexRoute);
 app.use('/api/health', healthRoute);
 app.use('/api/error', errorsRoute);
 app.use('/api/datesTimes', datesTimesRoute);
-
-// not checked
-
 app.use('/api/posts', postsRoute);
-
-// partially checked
-
 app.use('/api/sbTumblr', sbTumblrRoute);
 
 
@@ -189,7 +183,7 @@ app.use((err, req, res, next) => {
 // CRON ---
 
 // schedule for once per minute
-cron.schedule('* * * * *', () => {
+/* cron.schedule('* * * * *', () => {
 	// get a promise to post
 	posts.Post()
 		// if the promise is resolved with the posting result, then respond with the docs as JSON
@@ -202,7 +196,7 @@ cron.schedule('* * * * *', () => {
 			console.log('Posting error:'); // eslint-disable-line no-console
 			console.log(error); // eslint-disable-line no-console
 		});
-});
+}); */
 
 
 // PROCESS ---

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 
 
 export default class ApiClient {
@@ -19,11 +20,16 @@ export default class ApiClient {
 				});
 		});
 	}
-	static PostAPIData(endpoint, jsonObject, config) {
+	static PostAPIData(endpoint, jsonObject) {
 		// return a new promise
 		return new Promise((resolve, reject) => {
+			const config = { 
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				}, 
+			};
 			// get a promise to post the data
-			axios.post(endpoint, jsonObject, config)
+			axios.post(endpoint, qs.stringify(jsonObject), config)
 				// if the promise is resolved with a result, then resolve this promise with the result
 				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error

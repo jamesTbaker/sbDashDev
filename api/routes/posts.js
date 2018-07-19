@@ -12,7 +12,7 @@ const router = express.Router();
 // GET ---
 
 router.get('/get-post', (req, res, next) => {
-	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'))) {
+	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'), req.header('Origin'))) {
 		posts.ReturnOneRandomInSeasonPost()
 			.then((result) => { res.json(result); })
 			.catch((error) => { res.json(error); });
@@ -25,8 +25,21 @@ router.get('/get-post', (req, res, next) => {
 });
 
 router.get('/post', (req, res, next) => {
-	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'))) {
+	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'), req.header('Origin'))) {
 		posts.Post()
+			.then((result) => { res.json(result); })
+			.catch((error) => { res.json(error); });
+	} else {
+		res.json({
+			error: true,
+			authorizationError: true,
+		});
+	}
+});
+
+router.post('/add', (req, res, next) => {
+	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'), req.header('Origin'))) {
+		posts.AddPostToQueueAndReturnID(req.body)
 			.then((result) => { res.json(result); })
 			.catch((error) => { res.json(error); });
 	} else {

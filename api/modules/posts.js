@@ -29,7 +29,7 @@ module.exports = {
 
 	DeletePost: (post) => {
 		// get a promise to delete the post in db, but don't wait for resolution
-		dbQueries.DeleteDocFromCollection(post._id, 'posts');
+		dbQueries.DeleteDocFromCollection(post._id, 'newQueue');
 	},
 
 	AddPostToQueueAndReturnID: post =>

@@ -7,7 +7,5 @@
 
 module.exports = {
 
-	ReturnIsAuthorized: incomingRestAuth => 
-		incomingRestAuth === process.env.httpRestAuthorizationToken,
-		
+	ReturnIsAuthorized: (incomingRestAuth, incomingOrigin) => incomingRestAuth === process.env.httpRestAuthorizationToken || incomingOrigin === 'http://192.168.0.15:4001',
 };

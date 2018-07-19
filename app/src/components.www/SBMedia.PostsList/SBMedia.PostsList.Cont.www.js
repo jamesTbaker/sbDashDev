@@ -5,6 +5,8 @@ import * as React from 'react';
 import styled from 'styled-components';
 import PostOption from '../SBMedia.PostOption/SBMedia.PostOption.Pres.www';
 
+const PostsListsData = require('./SBMedia.PostsList.Data');
+
 // --- COMPONENT
 
 const PostList = styled.ul`
@@ -30,7 +32,19 @@ export default class PostsList extends React.Component {
 		this.handlePostOptionClick = this.handlePostOptionClick.bind(this);
 	}
 	returnThisTumblrIDInThisElement(tumblrID, arrayElement) {
-		return arrayElement.tumblrID === tumblrID;
+		if (arrayElement.tumblrID) {
+			return arrayElement.tumblrID === tumblrID;
+		}
+		return arrayElement.id === tumblrID;
+	}
+	returnPostOptionFromProps(tumblrID) {
+		let neededPostOption = null;
+		this.props.posts.forEach((postOption) => {
+			if (this.returnThisTumblrIDInThisElement(tumblrID, postOption)) {
+				neededPostOption = postOption;
+			}
+		});
+		return neededPostOption;
 	}
 	returnPostOptionIsSelected(tumblrID) {
 		let selected = false;
@@ -49,12 +63,28 @@ export default class PostsList extends React.Component {
 		}
 	}
 	addPostOptionToDatabaseAndState(tumblrID) {
-		this.addPostOptionToDatabase(tumblrID);
-		this.addPostOptionToState(tumblrID);
+		// get a promise to post the post data to the API
+		this.addPostOptionToDatabase(tumblrID)
+			// if the promise is resolved with a result
+			.then((result) => {
+				console.log('addPostOptionToDatabaseAndState - result');
+				console.log(result);
+				// add the tumblrID and the mongoID to state
+				// this.addPostOptionToState(tumblrID, result.id);
+			});
 	}
 	addPostOptionToDatabase(tumblrID) {
-		console.log('addPostOptionToDatabase');
-		console.log(tumblrID);
+		// return a new promise
+		return new Promise((resolve, reject) => {
+			const post = this.returnPostOptionFromProps(tumblrID);
+			// get a promise to post the post data to the API
+			PostsListsData.AddPostOptionToDatabaseAndReturnID(post)
+				// if the promise is resolved with a result, then resolve this promise with the result
+				.then((result) => { resolve(result); })
+				// if the promise is rejected with an error, 
+				// 		then reject this promise with the error
+				.catch((error) => { reject(error); });
+		});
 	}
 	addPostOptionToState(tumblrID, mongoID) {
 		console.log('addPostOptionToState');
