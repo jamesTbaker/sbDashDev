@@ -76,9 +76,20 @@ export default class PostsList extends React.Component {
 	addPostOptionToDatabase(tumblrID) {
 		// return a new promise
 		return new Promise((resolve, reject) => {
+			// get the post's raw data from props
 			const post = this.returnPostOptionFromProps(tumblrID);
+			// extract only the data needed
+			const postExtract = {
+				post_tumblr_post_url: post.post_url,
+				tumblrID: post.id,
+				tumblrReblogKey: post.reblog_key,
+				photoURL: post.photos[0].original_size.url,
+				// tags: XXXXXX,
+				// addedCaption: XXXXXX,
+				season: 'summer',
+			};
 			// get a promise to post the post data to the API
-			PostsListsData.AddPostOptionToDatabaseAndReturnID(post)
+			PostsListsData.AddPostOptionToDatabaseAndReturnID(postExtract)
 				// if the promise is resolved with a result, then resolve this promise with the result
 				.then((result) => { resolve(result); })
 				// if the promise is rejected with an error, 

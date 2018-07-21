@@ -183,7 +183,7 @@ app.use((err, req, res, next) => {
 // CRON ---
 
 // schedule for once per minute
-/* cron.schedule('* * * * *', () => {
+cron.schedule('* * * * *', () => {
 	// get a promise to post
 	posts.Post()
 		// if the promise is resolved with the posting result, then respond with the docs as JSON
@@ -196,7 +196,7 @@ app.use((err, req, res, next) => {
 			console.log('Posting error:'); // eslint-disable-line no-console
 			console.log(error); // eslint-disable-line no-console
 		});
-}); */
+});
 
 
 // PROCESS ---

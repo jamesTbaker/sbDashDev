@@ -41,7 +41,7 @@ module.exports = {
 				.then((result) => {
 					resolve({
 						error: false,
-						docID: result._id,
+						docID: result.docs._id,
 					});
 				})
 				.catch((error) => {
@@ -137,6 +137,4 @@ module.exports = {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		})),
-
-	
 };

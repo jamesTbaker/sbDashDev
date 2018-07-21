@@ -40,7 +40,7 @@ router.get('/post', (req, res, next) => {
 router.post('/add', (req, res, next) => {
 	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'), req.header('Origin'))) {
 		posts.AddPostToQueueAndReturnID(req.body)
-			.then((result) => { res.json(result); })
+			.then((result) => { console.log('route - result'); console.log(result); res.json(result); })
 			.catch((error) => { res.json(error); });
 	} else {
 		res.json({

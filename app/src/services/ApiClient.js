@@ -31,9 +31,15 @@ export default class ApiClient {
 			// get a promise to post the data
 			axios.post(endpoint, qs.stringify(jsonObject), config)
 				// if the promise is resolved with a result, then resolve this promise with the result
-				.then((result) => { resolve(result); })
+				.then((result) => { 
+					console.log('axios result');
+					console.log(result);
+					resolve(result);
+				})
 				// if the promise is rejected with an error
 				.catch((returnedError) => {
+					console.log('axios error');
+					console.log(returnedError);
 					// reject this promise with an error
 					reject({
 						error: true,
