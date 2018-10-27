@@ -11,6 +11,7 @@ node_modules
 
 # Build generated files
 www
+.serverless
 
 
 # Coverage directory used by tools like istanbul
@@ -27,3 +28,4 @@ obj
 
 # Misc
 *.txt
+_awsExamples
