@@ -1,4 +1,4 @@
-service: data-migration
+service: sbDash
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -7,8 +7,6 @@ provider:
   runtime: nodejs6.10
   region: us-east-1
   profile: serverless-admin
-  environment:
-    DYNAMODB_TABLE: postsQueue
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -18,14 +16,16 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
-
+      Resource:
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_health"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_sbSettings"
+        
 functions:
-  insertAll:
-    handler: insertAll.insertAll
+  ReturnHealth:
+    handler: health.ReturnHealth
     timeout: 180
     events:
       - http:
-          path: insertAll
+          path: health
           method: get
           cors: true
