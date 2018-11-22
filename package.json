@@ -31,7 +31,6 @@
 	"homepage": "https://github.com/jamesTbaker/sbDashDev#readme",
 	"dependencies": {
 		"autoprefixer": "^8.3.0",
-		"aws-sdk": "^2.344.0",
 		"axios": "^0.18.0",
 		"babel-cli": "^6.24.1",
 		"babel-core": "^6.25.0",
@@ -95,6 +94,8 @@
 		"eslint-plugin-babel": "^5.0.0",
 		"eslint-plugin-import": "^2.8.0",
 		"eslint-plugin-jsx-a11y": "^6.0.3",
-		"eslint-plugin-react": "^7.5.1"
+		"eslint-plugin-react": "^7.5.1",
+		"serverless-gulp": "^1.0.10",
+		"yargs": "^12.0.5"
 	}
 }

@@ -19,8 +19,27 @@ provider:
       Resource:
         - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_health"
         - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_sbSettings"
-        
+
+plugins:
+  - serverless-plugin-include-dependencies
+
 functions:
+  TestSync:
+    handler: test.TestSync
+    timeout: 180
+    events:
+      - http:
+          path: TestSync
+          method: get
+          cors: true
+  TestAsync:
+    handler: test.TestAsync
+    timeout: 180
+    events:
+      - http:
+          path: TestAsync
+          method: get
+          cors: true
   ReturnHealth:
     handler: health.ReturnHealth
     timeout: 180
