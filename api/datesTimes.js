@@ -17,15 +17,31 @@ module.exports = {
 
 	ReturnThisYearLocalFourDigits: () => moment.tz('America/New_York').format('YYYY'),
 
-	ReturnStartOfTurkeyDayLocalUTCFormat: () => momentHoliday().holiday('Thanksgiving Day').format(),
+	ReturnStartOfTurkeyDayLocalUTCFormat: () => {
+		let startDateTime = momentHoliday().holiday('Thanksgiving Day').format();
+		startDateTime = moment(startDateTime).add(5, 'hours').format();
+		return moment(startDateTime).tz('America/New_York').format('YYYY-MM-DD HH:mm:ssZ');
+	},
 
-	ReturnEndOfTurkeyDayLocalUTCFormat: () => moment(module.exports.ReturnStartOfTurkeyDayLocalUTCFormat()).add(23, 'hours').add(59, 'minutes').format(),
+	ReturnEndOfTurkeyDayLocalUTCFormat: () => {
+		let endDateTime = momentHoliday().holiday('Thanksgiving Day')
+			.add(23, 'hours').add(59, 'minutes')
+			.format();
+		endDateTime = moment(endDateTime).add(5, 'hours').format();
+		return moment(endDateTime).tz('America/New_York').format('YYYY-MM-DD HH:mm:ssZ');
+	},
 
-	ReturnDayAfterTurkeyDayLocalUTCFormat: () => moment(module.exports.ReturnStartOfTurkeyDayLocalUTCFormat()).add(24, 'hours').format(),
+	ReturnDayAfterTurkeyDayLocalUTCFormat: () => {
+		let dayAfterDateTime = momentHoliday().holiday('Thanksgiving Day')
+			.add(24, 'hours')
+			.format();
+		dayAfterDateTime = moment(dayAfterDateTime).add(5, 'hours').format();
+		return moment(dayAfterDateTime).tz('America/New_York').format('YYYY-MM-DD HH:mm:ssZ');
+	},
 
 	ReturnPostsSettings: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// construct db params
 			const params = {
 				TableName: '_dev_postsSettings',
@@ -37,8 +53,6 @@ module.exports = {
 			dbQueries.ReturnDBItems(params)
 				// if the promise is resolved with the items, then resolve this promise with the items
 				.then((postsSettings) => {
-					console.log('postsSettings');
-					console.log(postsSettings);
 					resolve({
 						error: postsSettings.error,
 						postsSettings: postsSettings.items,
@@ -46,11 +60,11 @@ module.exports = {
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
-		})),
+		}),
 
 	ReturnCurrentPostSchedulingSeason: () => 
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get the current local time in UTC format
 			const nowBoston = module.exports.ReturnNowBostonDateTimeUTCFormat();
 			// get the current year to use in constructing times
@@ -63,6 +77,10 @@ module.exports = {
 			module.exports.ReturnPostsSettings()
 			// if the promise is resolved with the settings
 				.then((postsSettings) => {
+					console.log('postsSettings');
+					console.log(postsSettings);
+					console.log('postsSettings.data.Item.scheduling');
+					console.log(postsSettings.data.Item.scheduling);
 					// iterate over the seasonal settings
 					postsSettings.postsSettings.scheduling.seasonal.forEach(({
 						name, friendlyName, seasonStartDateTime, seasonEndDateTime,
@@ -95,11 +113,11 @@ module.exports = {
 				})
 				// if the promise is rejected with an error, reject this promise with the error
 				.catch((error) => { reject(error); });
-		})),	
+		}),	
 
 	ReturnNowIsInsidePostingWindow: () => 
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get the current local time in UTC format
 			const nowBoston = module.exports.ReturnNowBostonDateTimeUTCFormat();
 			// get the current date to use in constructing times
@@ -119,11 +137,11 @@ module.exports = {
 					// reject this promise with the error
 					reject(error);
 				});
-		})),	
+		}),	
 	
 	UpdateTimeOfLastPosting: () => 
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get the current local time in UTC format
 			const nowBoston = module.exports.ReturnNowBostonDateTimeUTCFormat();
 			// get a promise to retrieve posts settings
@@ -151,11 +169,11 @@ module.exports = {
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
-		})),
+		}),
 
 	ReturnQuantityOfPostsReadyThisSeason: () => 
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to return the current season
 			module.exports.ReturnCurrentPostSchedulingSeason()
 				// if the promise is resolved with the current season
@@ -187,11 +205,11 @@ module.exports = {
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
-		})),	
+		}),	
 
 	ReturnLongEnoughSinceLastPost: () => 
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to get post scheduling settings from db
 			module.exports.ReturnPostsSettings()
 				// if the promise is resolved with the settings
@@ -254,5 +272,5 @@ module.exports = {
 				})
 				// if the promise is rejected with an error, then reject this promise with the error
 				.catch((error) => { reject(error); });
-		})),
+		}),
 };

@@ -18,7 +18,11 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_health"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_postsQueue"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_postsSettings"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_postsSourcesTumblr"
         - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_sbSettings"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/_dev_tumblrSettings"
 
 plugins:
   - serverless-plugin-include-dependencies

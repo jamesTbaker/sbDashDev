@@ -9,8 +9,8 @@ module.exports = {
 
 	TestSync: (event, context, callback) => {
 		// do
-		const returnVar = datesTimes.ReturnThisYearLocalFourDigits();
-		console.log('using test m1');
+		const returnVar = datesTimes.ReturnCurrentPostSchedulingSeason();
+		// console.log('using test m3');
 		// set response
 		const response = {
 			statusCode: 200,
