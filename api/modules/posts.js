@@ -1,6 +1,8 @@
 
 // ----- PULL IN MODULES
 
+const path = require('path');
+const fse = require('fse');
 const dbQueries = require('./dbQueries');
 const datesTimes = require('./datesTimes');
 const sbTumblr = require('./sbTumblr');
@@ -70,7 +72,7 @@ module.exports = {
 	
 	Post: () =>
 		// return a new promise
-		new Promise(((resolve, reject) => {
+		new Promise((resolve, reject) => {
 			// get a promise to retrieve flag indicating it's been long enough since the last post
 			const getLongEnoughSinceLastPost = datesTimes.ReturnLongEnoughSinceLastPost()
 				// if the promise is rejected with an error, reject this promise with the error
@@ -136,5 +138,28 @@ module.exports = {
 				})
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
-		})),
+		}),
+/* 
+	TO DO - delete below function
+	EnterPosts: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			const filePath = path.join(__dirname, 'postsQueue.json');
+			const posts = JSON.parse(fse.readFileSync(filePath));
+			posts.forEach((post) => {
+				const doc = {
+					tumblrID: post.tumblrID.idNumber,
+					tumblrReblogKey: post.tumblrReblogKey,
+					season: post.season,
+				};
+				// get a promise to add the post to the db
+				dbQueries.InsertDocIntoCollection(doc, 'postsQueue')
+					// if the promise is resolved with the result
+					.then((result) => {
+					})
+					.catch((error) => {
+					});
+			});
+			resolve('---done');
+		}), */
 };
