@@ -69,6 +69,55 @@ module.exports = {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}),
+
+	SkinnyPost: () =>
+		// return a new promise
+		new Promise((resolve, reject) => {
+			// get a promise to retrieve a random but in-season post
+			module.exports.ReturnOneRandomInSeasonPost()
+				// if the promise is resolved with the post info
+				.then((postInfo) => {
+					// get a promise to try to post to Tumblr
+					sbTumblr.PostToTumblr(postInfo)
+						// if the promise is resolved with a success message
+						.then((result) => {
+							// mark the post as posted
+							module.exports.UpdatePostPostedProperty(result.post.docs[0]);
+							// update the last posted time
+							datesTimes.UpdateTimeOfLastPosting();
+							// resolve this promise with the PostToTumblr result
+							resolve(result);
+						})
+						// if the promise is rejected with an error, 
+						// 		then reject this promise with an error
+						.catch((error) => {
+							// get qty times this post has been involved in a posting error
+							let postErrorQuantity = 0;
+							if (
+								error &&
+								error.post &&
+								error.post.docs &&
+								error.post.docs[0] &&
+								error.post.docs[0].postErrorQuantity
+							) {
+								postErrorQuantity = { postErrorQuantity };
+							}
+							// if there have at least 2 previous errors 
+							// 		(at least 3+ errors total, including this one)
+							if (postErrorQuantity >= 2) {
+								// delete the post
+								module.exports.DeletePost(error.post.docs[0]);
+								// if post's error qty < 2 (i.e., if there have been less than 3 errors)
+							} else {
+								// increase postErrorQuantity
+								module.exports.IncreasePostErrorQuantity(error.post);
+							}
+							reject(error);
+						});
+				})
+				// if the promise is rejected with an error, then reject this promise with an error
+				.catch((error) => { reject(error); });
+		}),
 	
 	Post: () =>
 		// return a new promise

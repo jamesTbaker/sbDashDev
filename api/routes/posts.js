@@ -24,6 +24,19 @@ router.get('/get-post', (req, res, next) => {
 	}
 });
 
+router.get('/skinny-post', (req, res, next) => {
+	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'), req.header('Origin'))) {
+		posts.SkinnyPost()
+			.then((result) => { res.json(result); })
+			.catch((error) => { res.json(error); });
+	} else {
+		res.json({
+			error: true,
+			authorizationError: true,
+		});
+	}
+});
+
 router.get('/post', (req, res, next) => {
 	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'), req.header('Origin'))) {
 		posts.Post()
