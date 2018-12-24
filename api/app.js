@@ -3,7 +3,7 @@
 
 const dotenv = require('dotenv'); // eslint-disable-line global-require
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: './.env' });
 
 
 // ----- PULL IN OTHER MODULES, ROUTES
@@ -188,8 +188,8 @@ cron.schedule('* * * * *', () => {
 	posts.Post()
 		// if the promise is resolved with the posting result, then respond with the docs as JSON
 		.then((result) => {
-			// console.log('Posted:'); // eslint-disable-line no-console
-			// console.log(result); // eslint-disable-line no-console
+			console.log('Posted:'); // eslint-disable-line no-console
+			console.log(result); // eslint-disable-line no-console
 		})
 		// if the promise is rejected with an error, then respond with the error as JSON
 		.catch((error) => {
@@ -197,7 +197,6 @@ cron.schedule('* * * * *', () => {
 			console.log(error); // eslint-disable-line no-console
 		});
 });
-
 
 // PROCESS ---
 
