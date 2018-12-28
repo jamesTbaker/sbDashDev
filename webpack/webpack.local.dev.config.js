@@ -10,24 +10,24 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
 	entry: {
-		index: './app/src/components.www/SBMedia/SBMedia.Cont.www.js',
+		index: './client/src/components.www/SBMedia/SBMedia.Cont.www.js',
 	},
 	output: {
-		path: path.join(__dirname, '../app/www'),
+		path: path.join(__dirname, '../client/www'),
 		filename: 'SBMedia.www.0.0.1.dev.js',
 	},
 	module: {
 		loaders: [
 			{
-				include: path.join(__dirname, '../app/src'),
+				include: path.join(__dirname, '../client/src'),
 				test: /\.js$/,
 				loader: 'babel-loader',
 			}, {
-				include: path.join(__dirname, '../app/src'),
+				include: path.join(__dirname, '../client/src'),
 				test: /\.sass$/,
 				loader: 'style-loader!css-loader!postcss-loader!sass-loader',
 			}, {
-				include: path.join(__dirname, '../app/src'),
+				include: path.join(__dirname, '../client/src'),
 				test: /\.(jpg|png)$/,
 				use: {
 					loader: 'file-loader',
@@ -50,14 +50,14 @@ module.exports = merge(baseConfig, {
 	},
 	plugins: [
 		new HtmlWebpack({
-			template: path.join(__dirname, '../app/src', 'index.html'),
+			template: path.join(__dirname, '../client/src', 'index.html'),
 			hash: true,
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
 	devtool: 'eval-source-map',
 	devServer: {
-		contentBase: path.join(__dirname, '../app/www/js'),
+		contentBase: path.join(__dirname, '../client/www/js'),
 		hot: true,
 		host: '192.168.0.15', // set to VirtualBox IP so it can be accessed outside VBox
 		port: 4001,

@@ -19,15 +19,15 @@ export default class PostsList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			postOptionsSelected: [
-				{
-					tumblrID: 175656834461,
-					mongoID: 175656834461,
-				}, {
-					tumblrID: 175656586575,
-					mongoID: 175656586575,
-				},
-			],
+			postOptionsSelected: [],
+			// {
+			// 	tumblrID: 175656834461,
+			// 	mongoID: 175656834461,
+			// }, {
+			// 	tumblrID: 175656586575,
+			// 	mongoID: 175656586575,
+			// },
+			
 		};
 		this.handlePostOptionClick = this.handlePostOptionClick.bind(this);
 	}
@@ -124,7 +124,7 @@ export default class PostsList extends React.Component {
 			);
 		}
 		return (
-			<p>Sorry, I can&apos;t find any messages to show you.</p>
+			<p>Sorry, I can&apos;t find any posts to show you.</p>
 		);
 	}
 }

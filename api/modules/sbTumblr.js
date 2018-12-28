@@ -73,7 +73,7 @@ module.exports = {
 							(tumblrError, tumblrResponse) => {
 								// if Tumblr didn't return an error, resolve this promise with the posts data
 								if (!tumblrError) {
-									resolve({ error: false, posts: tumblrResponse });
+									resolve({ error: false, avatarURL: tumblrResponse.avatar_url });
 								} else {
 									reject({ error: true, tumblrError });
 								}

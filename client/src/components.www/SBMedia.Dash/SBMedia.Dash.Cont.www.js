@@ -31,8 +31,6 @@ export default class SBMediaDashContainer extends React.Component {
 			});
 	}
 	render() {
-		// console.log('rendering dash');
-		// console.log(this.state.postOptions);
 		return (
 			<div>
 				<PostsList

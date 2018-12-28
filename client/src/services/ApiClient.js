@@ -6,8 +6,14 @@ export default class ApiClient {
 	static GetAPIData(endpoint) {
 		// return a new promise
 		return new Promise((resolve, reject) => {
+			// set axios config
+			const axiosConfig = {
+				headers: {
+					restAuth: 'OyDFNm6rsM',
+				},
+			};
 			// get a promise to retrieve the data
-			axios.get(endpoint)
+			axios.get(endpoint, axiosConfig)
 				// if the promise is resolved with the data, then resolve this promise with the data
 				.then((result) => { console.log('result'); console.log(result); resolve(result); })
 				// if the promise is rejected with an error
@@ -25,6 +31,7 @@ export default class ApiClient {
 		return new Promise((resolve, reject) => {
 			const config = { 
 				headers: {
+					restAuth: 'OyDFNm6rsM',
 					'Content-Type': 'application/x-www-form-urlencoded',
 				}, 
 			};
