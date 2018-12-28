@@ -4,6 +4,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import PostOption from '../SBMedia.PostOption/SBMedia.PostOption.Pres.www';
+import StylePatterns from '../SBMedia.StylePatterns/SBMedia.StylePatterns.Data';
 
 const PostsListsData = require('./SBMedia.PostsList.Data');
 
@@ -13,25 +14,18 @@ const PostList = styled.ul`
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	background-color: ${StylePatterns.Color('blue1')};
 `;
 
 export default class PostsList extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			postOptionsSelected: [],
-			// {
-			// 	tumblrID: 175656834461,
-			// 	mongoID: 175656834461,
-			// }, {
-			// 	tumblrID: 175656586575,
-			// 	mongoID: 175656586575,
-			// },
-			
-		};
-		this.handlePostOptionClick = this.handlePostOptionClick.bind(this);
+		// this.state = {
+		// 	postOptionsSelected: [],
+		// };
+		// this.handlePostOptionClick = this.handlePostOptionClick.bind(this);
 	}
-	returnThisTumblrIDInThisElement(tumblrID, arrayElement) {
+	/* returnThisTumblrIDInThisElement(tumblrID, arrayElement) {
 		if (arrayElement.tumblrID) {
 			return arrayElement.tumblrID === tumblrID;
 		}
@@ -104,7 +98,7 @@ export default class PostsList extends React.Component {
 	deletePostOptionFromDatabase(tumblrID) {
 		console.log('deletePostOptionToDatabase');
 		console.log(tumblrID);
-	}
+	} */
 	render() {
 		// console.log(this.props.posts);
 		if (this.props.posts && this.props.posts[0]) {
@@ -115,8 +109,8 @@ export default class PostsList extends React.Component {
 							<PostOption
 								key={postValue.id}
 								postOptionContent={postValue}
-								postOptionSelected={this.returnPostOptionIsSelected(postValue.id)}
-								handlePostOptionClick={this.handlePostOptionClick}
+								// postOptionSelected={this.returnPostOptionIsSelected(postValue.id)}
+								// handlePostOptionClick={this.handlePostOptionClick}
 							/>
 						))
 					}

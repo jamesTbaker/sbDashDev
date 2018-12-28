@@ -8,7 +8,7 @@ import styled from 'styled-components';
 export default styled.div`
 	position: fixed;
 	width: 100%;
-	padding: ${(props) => { console.log('props'); console.log(props); return props.padding; }};
+	padding: ${props => /* console.log('props'); console.log(props); */ props.padding};
 	margin: ${props => props.margin};
 
 	top: ${props => (props.top ? `${props.top}rem` : 'auto')};

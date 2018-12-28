@@ -32,11 +32,9 @@ export default class SBMediaDashContainer extends React.Component {
 	}
 	render() {
 		return (
-			<div>
-				<PostsList
-					posts={this.state.postOptions}
-				/>
-			</div>
+			<PostsList
+				posts={this.state.postOptions}
+			/>
 		);
 	}
 }
