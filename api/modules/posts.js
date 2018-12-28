@@ -1,8 +1,8 @@
 
 // ----- PULL IN MODULES
 
-const path = require('path');
-const fse = require('fse');
+// const path = require('path');
+// const fse = require('fse');
 const dbQueries = require('./dbQueries');
 const datesTimes = require('./datesTimes');
 const sbTumblr = require('./sbTumblr');
@@ -17,8 +17,11 @@ module.exports = {
 	},
 
 	IncreasePostErrorQuantity: (post) => {
-		// get qty times this post has been involved in a posting error
-		let { postErrorQuantity } = post;
+		// set or get qty times this post has been involved in a posting error
+		let postErrorQuantity = 0;
+		if (post && post.postErrorQuantity) {
+			({ postErrorQuantity } = post);
+		}
 		// this post has been involved in 1+ posting errors before
 		postErrorQuantity = postErrorQuantity ?
 			// increment error quantity
@@ -107,7 +110,7 @@ module.exports = {
 							if (postErrorQuantity >= 2) {
 								// delete the post
 								module.exports.DeletePost(error.post.docs[0]);
-								// if post's error qty < 2 (i.e., if there have been less than 3 errors)
+							// if post's error qty < 2 (i.e., if there have been less than 3 errors)
 							} else {
 								// increase postErrorQuantity
 								module.exports.IncreasePostErrorQuantity(error.post);
@@ -171,7 +174,7 @@ module.exports = {
 										if (postErrorQuantity >= 2) {
 											// delete the post
 											module.exports.DeletePost(error.post.docs[0]);
-											// if post's error qty < 2 (i.e., if there have been less than 3 errors)
+										// if post's error qty < 2 (i.e., if there have been less than 3 errors)
 										} else {
 											// increase postErrorQuantity
 											module.exports.IncreasePostErrorQuantity(error.post);
@@ -188,27 +191,4 @@ module.exports = {
 				// if the promise is rejected with an error, then reject this promise with an error
 				.catch((error) => { reject(error); });
 		}),
-/* 
-	TO DO - delete below function
-	EnterPosts: () =>
-		// return a new promise
-		new Promise((resolve, reject) => {
-			const filePath = path.join(__dirname, 'postsQueue.json');
-			const posts = JSON.parse(fse.readFileSync(filePath));
-			posts.forEach((post) => {
-				const doc = {
-					tumblrID: post.tumblrID.idNumber,
-					tumblrReblogKey: post.tumblrReblogKey,
-					season: post.season,
-				};
-				// get a promise to add the post to the db
-				dbQueries.InsertDocIntoCollection(doc, 'postsQueue')
-					// if the promise is resolved with the result
-					.then((result) => {
-					})
-					.catch((error) => {
-					});
-			});
-			resolve('---done');
-		}), */
 };

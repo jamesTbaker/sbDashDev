@@ -25,19 +25,17 @@ const cron = require('node-cron');
 
 // CUSTOM MODULES ---
 
-const posts = require('./modules/posts');
+const posts = require('./api/modules/posts');
 
 
 // ROUTES ---
 
-const indexRoute = require('./routes/index');
-const healthRoute = require('./routes/health');
-const datesTimesRoute = require('./routes/datesTimes');
-const errorsRoute = require('./routes/errors');
-
-
-const postsRoute = require('./routes/posts');
-const sbTumblrRoute = require('./routes/sbTumblr');
+const apiIndexRoute = require('./api/routes/index');
+const healthRoute = require('./api/routes/health');
+const datesTimesRoute = require('./api/routes/datesTimes');
+const errorsRoute = require('./api/routes/errors');
+const postsRoute = require('./api/routes/posts');
+const sbTumblrRoute = require('./api/routes/sbTumblr');
 
 
 // ----- INSTANTIATE, CONFIG EXPRESS APP
@@ -146,7 +144,7 @@ app.listen(process.env.apiHttpPort, () => console.log(`Listening on port ${proce
 
 // ROUTES ---
 
-app.use('/api/', indexRoute);
+app.use('/api/', apiIndexRoute);
 app.use('/api/health', healthRoute);
 app.use('/api/error', errorsRoute);
 app.use('/api/datesTimes', datesTimesRoute);

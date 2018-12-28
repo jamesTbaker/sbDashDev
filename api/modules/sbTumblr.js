@@ -103,13 +103,14 @@ module.exports = {
 							tumblrSettings.tumblr.blogName,
 							tumblrReblogParameters,
 							(tumblrResponse) => {
-								// if Tumblr didn't return an error, resolve this promise with a message
+								// if Tumblr resturned a response and it wasn't an error
 								if (typeof (tumblrResponse) !== 'undefined'
-									&& tumblrResponse == null
-									&& !(tumblrResponse instanceof Error)) {
+									&& tumblrResponse == null) {
+									// resolve this promise with a message
 									resolve({ error: false, post: postInfo });
-									// if Tumblr returned an error, reject this promise with a message
+								// if Tumblr returned no response or response was an error
 								} else {
+									// reject this promise with a message
 									const tumblrError = {
 										error: true,
 										tumblrError: tumblrResponse,
@@ -117,7 +118,7 @@ module.exports = {
 									};
 									reject(tumblrError);
 								}
-							} // eslint-disable-line comma-dangle
+							},
 						);
 				})
 				// if the promise is rejected with an error, reject this promise with the error
