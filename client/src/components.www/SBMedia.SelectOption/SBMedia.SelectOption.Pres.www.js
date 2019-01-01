@@ -19,7 +19,7 @@ export default props => (
 		clickHandler={
 			e => 
 				props
-					.clickHandler(props.option.value, e)
+					.selectHandler(props.option, e)
 		}
 
 	/>

@@ -24,7 +24,10 @@ module.exports = {
 				.then((seasonQueriesReturnArray) => {
 					// extract the results 
 					const allSeasonsData = seasonQueriesReturnArray[0];
-					const currentSeason = seasonQueriesReturnArray[1].data;
+					const currentSeason = {
+						value: seasonQueriesReturnArray[1].data.name,
+						display: seasonQueriesReturnArray[1].data.friendlyName,
+					};
 					// extract name and friendly name, add react key, for each unique season
 					const allSeasons = [];
 					allSeasonsData.data.forEach((returnedSeason) => {

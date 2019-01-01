@@ -56,7 +56,6 @@ export default class PostsOption extends React.Component {
 		this.handlePostOptionsButtonClick = this.handlePostOptionsButtonClick.bind(this);
 	}
 	handlePostOptionsButtonClick() {
-		console.log('handlePostOptionsButtonClick');
 		this.setState(prevState => ({
 			showPostOptions: !prevState.showPostOptions,
 		}));
@@ -96,6 +95,7 @@ export default class PostsOption extends React.Component {
 						<PostOptionsButtonContainer>
 							<Button
 								buttonHeight="3"
+								iconPosition="before"
 								iconContent="ellipsis-h"
 								contentHeight="2.2"
 								text="Post Options"

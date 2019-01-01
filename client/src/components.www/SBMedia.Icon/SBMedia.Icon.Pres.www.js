@@ -14,7 +14,7 @@ export default styled.span`
 	text-decoration: inherit;
 	text-rendering: optimizeLegibility;
 	text-transform: none;
-	&:before {
+	&:${props => props.iconPosition} {
 		content: '${props => IconData.ReturnIconData(props.iconContent)}';
 	}
 `;

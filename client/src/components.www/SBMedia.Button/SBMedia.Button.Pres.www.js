@@ -14,8 +14,14 @@ const ReturnButtonVerticalPadding = (buttonHeight, contentHeight, topOrBottom) =
 	return rounded / 10;
 };
 
+const ReturnVisibleTextWrapperHorizontalPadding = 
+	iconPosition => (iconPosition === 'before' ? 'padding-left: 1rem;' : 'padding-right: 1rem;');
+
+const ReturnButtonWidth = fullWidth => (fullWidth ? '100%' : 'auto');
+
 const ButtonBase = styled.button`
 	display: inline-block;
+	width: ${props => ReturnButtonWidth(props.fullWidth)};
 	padding: ${props => ReturnButtonVerticalPadding(props.buttonHeight, props.contentHeight, 'top')}rem 1rem ${props => ReturnButtonVerticalPadding(props.buttonHeight, props.contentHeight, 'bottom')}rem 1rem;
 	border: 0;
 	background-color: ${props => props.defaultBackgroundColor};
@@ -32,9 +38,8 @@ const ButtonBase = styled.button`
 const VisibleTextWrapper = styled.span`
 	font-size: ${props => props.contentHeight}rem;
 	font-weight: normal;
-	${props => props.iconContent && `
-		padding-left: 1rem;
-	`}
+	text-align: ${props => props.textAlignment || 'left'};
+	${props => ReturnVisibleTextWrapperHorizontalPadding(props.iconPosition)}
 `;
 
 const InvisibleTextWrapper = styled.span`
@@ -52,9 +57,10 @@ export default props => (
 		activeContentColor={props.activeContentColor}
 	>
 		{
-			props.iconContent &&
+			props.iconPosition === 'before' && props.iconContent && 
 
 			<Icon
+				iconPosition="before"
 				iconContent={props.iconContent}
 				iconSize={props.contentHeight}
 			/>
@@ -73,6 +79,15 @@ export default props => (
 			props.textInvisible &&
 
 			<InvisibleTextWrapper>{props.text}</InvisibleTextWrapper>
+		}
+		{
+			props.iconPosition === 'after' && props.iconContent &&
+
+			<Icon
+				iconPosition="after"
+				iconContent={props.iconContent}
+				iconSize={props.contentHeight}
+			/>
 		}
 	</ButtonBase>
 );

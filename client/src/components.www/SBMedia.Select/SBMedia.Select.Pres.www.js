@@ -9,81 +9,47 @@ import SelectOption from '../SBMedia.SelectOption/SBMedia.SelectOption.Pres.www'
 
 // --- COMPONENT
 
-/* const ReturnButtonVerticalPadding = (buttonHeight, contentHeight, topOrBottom) => {
-	const timesTen = parseFloat(((buttonHeight - contentHeight) / 2).toFixed(2)) * 10;
-	const rounded = topOrBottom === 'top' ? Math.ceil(timesTen) : Math.floor(timesTen);
-	return rounded / 10;
-}; */
-
-/* const SelectBase = styled.button`
-	display: inline-block;
-	border: 0;
-	background-color: ${props => props.defaultBackgroundColor};
-	color: ${props => props.defaultContentColor};
-	cursor: pointer;
-	transition: color ${StylePatterns.StandardTransitionTime()}, background-color ${StylePatterns.StandardTransitionTime()};
-
-	&:hover {
-		background-color: ${props => props.activeBackgroundColor};
-		color: ${props => props.activeContentColor};
-	}
-`; */
-
-
 const PostContainer = styled.div`
 	padding: 1rem;
 	background-color: ${StylePatterns.Color('blue1')};
 `;
 
-
 export default class Select extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log('constructor props');
-		console.log(this.props);
 		this.state = {
 			showOptions: false,
-			selectedOption: {},
 		};
-		this.handleShowOptionsButtonClick = this.handleShowOptionsButtonClick.bind(this);
-		this.handleSelectionButtonClick = this.handleSelectionButtonClick.bind(this);
+		this.handleShowSelectOptionsButtonClick = this.handleShowSelectOptionsButtonClick.bind(this);
+		this.handleSelectOptionClick = this.handleSelectOptionClick.bind(this);
 	}
-	
-	returnDefaultOption(options) {
-		console.log('returnDefaultOption');
-		console.log(options);
-		let defaultOption = {};
-		this.props.options.forEach((option) => {
-			if (option.default) {
-				defaultOption = option;
-			}
-		});
-		return defaultOption;
-	}
-	handleShowOptionsButtonClick() {
-		console.log('handleShowOptionsButtonClick');
+	handleShowSelectOptionsButtonClick() {
 		this.setState(prevState => ({
 			showOptions: !prevState.showOptions,
 		}));
 	}
+	handleSelectOptionClick(option, e) {
+		this.setState(prevState => ({
+			showOptions: !prevState.showOptions,
+		}));
+		this.props.selectHandler(option);
+	}
 	render() {
-		console.log('select rendering');
-		// console.log('select props');
-		// console.log(this.props);
-		// console.log('select state');
-		// console.log(this.state);
 		return (
 			<div>
 				<Button
 					buttonHeight="3"
+					iconPosition="after"
 					iconContent="angle-down"
-					contentHeight="2.2"
-					text={this.state.selectedOption.display}
+					contentHeight="1.4"
+					text={this.props.value.display}
+					textAlignment="left"
+					fullWidth
 					defaultBackgroundColor={StylePatterns.Color('blue1')}
 					defaultContentColor={StylePatterns.Color('yellow')}
 					activeBackgroundColor={StylePatterns.Color('blue2')}
 					activeContentColor={StylePatterns.Color('yellow')}
-					clickHandler={this.handleShowOptionsButtonClick}
+					clickHandler={this.handleShowSelectOptionsButtonClick}
 				/>
 				{
 					this.state.showOptions && this.props.options[0] &&
@@ -94,7 +60,7 @@ export default class Select extends React.Component {
 								<SelectOption
 									key={option.key}
 									option={option}
-									clickHandler={this.handleSelectionButtonClick}
+									selectHandler={this.handleSelectOptionClick}
 								/>
 							))
 						}

@@ -23,6 +23,7 @@ export default props => (
 		>
 			<Button
 				buttonHeight="3"
+				iconPosition="before"
 				iconContent="tachometer"
 				contentHeight="2.2"
 				text="Dash"
@@ -35,6 +36,7 @@ export default props => (
 			/>
 			<Button
 				buttonHeight="3"
+				iconPosition="before"
 				iconContent="list-ul"
 				contentHeight="2.2"
 				text="Blogs"
@@ -47,6 +49,7 @@ export default props => (
 			/>
 			<Button
 				buttonHeight="3"
+				iconPosition="before"
 				iconContent="user"
 				contentHeight="2.2"
 				text="Skip Baker"
@@ -59,6 +62,7 @@ export default props => (
 			/>
 			<Button
 				buttonHeight="3"
+				iconPosition="before"
 				iconContent="cog"
 				contentHeight="2.2"
 				text="Administration"

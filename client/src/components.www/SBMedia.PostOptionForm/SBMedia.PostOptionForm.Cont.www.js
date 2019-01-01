@@ -4,7 +4,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import Select from '../SBMedia.Select/SBMedia.Select.Pres.www';
-import Button from '../SBMedia.Button/SBMedia.Button.Pres.www';
 import StylePatterns from '../SBMedia.StylePatterns/SBMedia.StylePatterns.Data';
 
 // --- COMPONENT
@@ -47,14 +46,12 @@ export default class PostOptionForm extends React.Component {
 			tags: '',
 			caption: '',
 		};
-		// this.XXX = this.XXX.bind(this);
+		this.handleSeasonSelection = this.handleSeasonSelection.bind(this);
 	}
-	handleSeasonSelection(selectedOptionValue) {
-		console.log('handleSelectionButtonClick');
-		// this.setState(() => ({
-		// 	selectedOptionValue,
-		// 	selectedOptionDisplay,
-		// }));
+	handleSeasonSelection(option) {
+		this.setState(() => ({
+			season: option,
+		}));
 	}
 
 	render() {
@@ -63,6 +60,7 @@ export default class PostOptionForm extends React.Component {
 				<Select
 					value={this.state.season}
 					options={this.props.allSeasons}
+					selectHandler={this.handleSeasonSelection}
 				/>
 				<PostTags type="text" />
 				<PostComments />
