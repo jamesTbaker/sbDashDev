@@ -11,6 +11,18 @@ const router = express.Router();
 
 // GET ---
 
+router.get('/all-post-scheduling-seasons', (req, res, next) => {
+	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'))) {
+		datesTimes.ReturnAllPostSchedulingSeasons()
+			.then((result) => { res.json(result); })
+			.catch((error) => { res.json(error); });
+	} else {
+		res.json({
+			error: true,
+			authorizationError: true,
+		});
+	}
+});
 router.get('/current-post-scheduling-season', (req, res, next) => {
 	if (httpAuth.ReturnIsAuthorized(req.header('restAuth'))) {
 		datesTimes.ReturnCurrentPostSchedulingSeason()

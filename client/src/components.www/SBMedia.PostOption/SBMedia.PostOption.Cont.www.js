@@ -2,10 +2,12 @@
 // --- IMPORTS
 
 import * as React from 'react';
+import MediaQuery from 'react-responsive';
 import styled from 'styled-components';
+import ScreenSizes from '../../services/ScreenSizes';
 import Button from '../SBMedia.Button/SBMedia.Button.Pres.www';
+import PostOptionForm from '../SBMedia.PostOptionForm/SBMedia.PostOptionForm.Cont.www';
 import StylePatterns from '../SBMedia.StylePatterns/SBMedia.StylePatterns.Data';
-// import SeasonSelect from '../SBMedia.SeasonSelect/SBMedia.SeasonSelect.Pres.www';
 
 // --- COMPONENT
 
@@ -32,49 +34,23 @@ const PostOptionsHeaderContainer = styled.div`
 
 const PostOptionsButtonContainer = styled.div`
 `;
+
 const PostBlogNameContainer = styled.div`
-	padding-top: .6rem	
-	font-size: ${StylePatterns.FontSize('xs')};
+	padding-top: .3rem	
 	text-align: right;
-	color: ${StylePatterns.Color('grey13')};
 `;
 
-
-const PostOptionsBodyContainer = styled.div`
-	padding: 1rem;
-	background-color: ${StylePatterns.Color('blue3')};
+const PostBlogName = styled.a`
+	font-size: ${StylePatterns.FontSize('xs')};
+	color: ${StylePatterns.Color('red5')};
+	text-decoration: none;
 `;
-const PostTags = styled.input`
-	width: 100%;
-	padding: .4rem 1.1rem;
-	height: 3.2rem;
-	font-size: 1.4rem;
-	line-height: 1.5;
-	color: ${StylePatterns.Color('yellow')};
-	background-color: ${StylePatterns.Color('blue1')};
-	border: none;
-	border-radius: .2rem;
-`;
-
-const PostComments = styled.textarea`
-	width: 100%;
-	padding: .4rem 1.1rem;
-	height: 4.7rem;
-	font-family: 'Roboto',sans-serif;
-	font-size: 1.4rem;
-	line-height: 1.5;
-	color: ${StylePatterns.Color('yellow')};
-	background-color: ${StylePatterns.Color('blue1')};
-	border: none;
-	border-radius: .2rem;
-`;
-
 
 export default class PostsOption extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			added: false,
+			// added: false,
 			showPostOptions: false,
 		};
 		this.handlePostOptionsButtonClick = this.handlePostOptionsButtonClick.bind(this);
@@ -89,16 +65,32 @@ export default class PostsOption extends React.Component {
 	render() {
 		return (
 			<PostContainer>
-				<PostImage
-					src={this.props.postOptionContent.photos[0].alt_sizes[3].url}
-					postOptionID={this.props.postOptionContent.id}
-					postOptionSelected={this.props.postOptionSelected}
-					// onClick={
-					// 	e => 
-					// 		props
-					// 			.handlePostOptionClick(this.props.postOptionContent.id, this.props.postOptionSelected, e)
-					// }
-				/>
+				<MediaQuery maxWidth={ScreenSizes.ReturnSmallMax()}>
+					<PostImage
+						src={this.props.postOptionContent.pics.small}
+						// postOptionID={this.props.postOptionContent.id}
+						// postOptionSelected={this.props.postOptionSelected}
+						// onClick={
+						// 	e => 
+						// 		props
+						// 			.handlePostOptionClick
+						// 			(this.props.postOptionContent.id, this.props.postOptionSelected, e)
+						// }
+					/>
+				</MediaQuery>
+				<MediaQuery
+					minWidth={ScreenSizes.ReturnMediumMin()}
+					maxWidth={ScreenSizes.ReturnMediumMax()}
+				>
+					<PostImage
+						src={this.props.postOptionContent.pics.medium}
+					/>
+				</MediaQuery>
+				<MediaQuery minWidth={ScreenSizes.ReturnLargeMin()}>
+					<PostImage
+						src={this.props.postOptionContent.pics.large}
+					/>
+				</MediaQuery>
 				<PostOptionsContainer>
 					<PostOptionsHeaderContainer>
 						<PostOptionsButtonContainer>
@@ -115,16 +107,21 @@ export default class PostsOption extends React.Component {
 								clickHandler={this.handlePostOptionsButtonClick}
 							/>
 						</PostOptionsButtonContainer>
-						<PostBlogNameContainer>{this.props.postOptionContent.blog_name}</PostBlogNameContainer>
+						<PostBlogNameContainer>
+							<PostBlogName
+								href={this.props.postOptionContent.post_url}
+							>
+								{this.props.postOptionContent.blog_name}
+							</PostBlogName>
+						</PostBlogNameContainer>
 					</PostOptionsHeaderContainer>
 					{
 						this.state.showPostOptions &&
 
-						<PostOptionsBodyContainer>
-							{/* <SeasonSelect /> */}
-							<PostTags type="text" />
-							<PostComments />
-						</PostOptionsBodyContainer>
+						<PostOptionForm
+							allSeasons={this.props.allSeasons}
+							currentSeason={this.props.currentSeason}
+						/>
 					}
 				</PostOptionsContainer>
 			</PostContainer>

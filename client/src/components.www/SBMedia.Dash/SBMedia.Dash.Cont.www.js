@@ -34,6 +34,8 @@ export default class SBMediaDashContainer extends React.Component {
 		return (
 			<PostsList
 				posts={this.state.postOptions}
+				allSeasons={this.props.allSeasons}
+				currentSeason={this.props.currentSeason}
 			/>
 		);
 	}

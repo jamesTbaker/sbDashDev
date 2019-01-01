@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import styled from 'styled-components';
-import PostOption from '../SBMedia.PostOption/SBMedia.PostOption.Pres.www';
+import PostOption from '../SBMedia.PostOption/SBMedia.PostOption.Cont.www';
 import StylePatterns from '../SBMedia.StylePatterns/SBMedia.StylePatterns.Data';
 
 const PostsListsData = require('./SBMedia.PostsList.Data');
@@ -111,6 +111,8 @@ export default class PostsList extends React.Component {
 								postOptionContent={postValue}
 								// postOptionSelected={this.returnPostOptionIsSelected(postValue.id)}
 								// handlePostOptionClick={this.handlePostOptionClick}
+								allSeasons={this.props.allSeasons}
+								currentSeason={this.props.currentSeason}
 							/>
 						))
 					}

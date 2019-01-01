@@ -15,7 +15,7 @@ module.exports = {
 				// if the promise is resolved with the posts
 				.then((dashPosts) => {
 					// resolve this promise with the posts
-					resolve(dashPosts.data.dashPosts.posts);
+					resolve(dashPosts.data.posts);
 				})
 				// if the promise is rejected with an error
 				.catch((dashError) => {

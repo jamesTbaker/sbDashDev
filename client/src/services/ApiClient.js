@@ -15,9 +15,15 @@ export default class ApiClient {
 			// get a promise to retrieve the data
 			axios.get(endpoint, axiosConfig)
 				// if the promise is resolved with the data, then resolve this promise with the data
-				.then((result) => { console.log('result'); console.log(result); resolve(result); })
+				.then((result) => {
+					// console.log('axios result');
+					// console.log(result);
+					resolve(result);
+				})
 				// if the promise is rejected with an error
 				.catch((returnedError) => {
+					// console.log('axios error');
+					// console.log(returnedError);
 					// reject this promise with an error
 					reject({
 						error: true,
@@ -39,14 +45,14 @@ export default class ApiClient {
 			axios.post(endpoint, qs.stringify(jsonObject), config)
 				// if the promise is resolved with a result, then resolve this promise with the result
 				.then((result) => { 
-					console.log('axios result');
-					console.log(result);
+					// console.log('axios result');
+					// console.log(result);
 					resolve(result);
 				})
 				// if the promise is rejected with an error
 				.catch((returnedError) => {
-					console.log('axios error');
-					console.log(returnedError);
+					// console.log('axios error');
+					// console.log(returnedError);
 					// reject this promise with an error
 					reject({
 						error: true,

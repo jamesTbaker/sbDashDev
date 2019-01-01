@@ -13,6 +13,7 @@ import LineAwesomeWOFF from '../../fonts/line-awesome.woff';
 import LineAwesomeWOFF2 from '../../fonts/line-awesome.woff2';
 import LineAwesomeSVG from '../../fonts/line-awesome.svg';
 
+const SBMediaData = require('./SBMedia.Data');
 
 injectGlobal`
 	* { box-sizing: border-box; }
@@ -48,11 +49,23 @@ export default class SBDashApp extends React.Component {
 			showScreenBlogs: false,
 			showScreenSB: false,
 			showScreenAdmin: false,
+			allSeasons: [],
+			currentSeason: {},
 		};
 		this.handleButtonDashClick = this.handleButtonDashClick.bind(this);
 		this.handleButtonBlogsClick = this.handleButtonBlogsClick.bind(this);
 		this.handleButtonSBClick = this.handleButtonSBClick.bind(this);
 		this.handleButtonAdminClick = this.handleButtonAdminClick.bind(this);
+	}
+	componentDidMount() {
+		// get a promise to return a batch of dashboard posts
+		SBMediaData.ReturnSeasonsData()
+			.then((returnedSeasons) => {
+				this.setState({
+					allSeasons: returnedSeasons.allSeasons,
+					currentSeason: returnedSeasons.currentSeason,
+				});
+			});
 	}
 	handleButtonDashClick() {
 		this.setState({
@@ -92,7 +105,10 @@ export default class SBDashApp extends React.Component {
 				{
 					this.state.showScreenDash &&
 
-					<Dash />
+					<Dash
+						allSeasons={this.state.allSeasons}
+						currentSeason={this.state.currentSeason}
+					/>
 				}
 				{
 					this.state.showScreenBlogs &&

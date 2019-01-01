@@ -3,6 +3,7 @@
 
 const tumblr = require('tumblr.js');
 const dbQueries = require('./dbQueries');
+const screenSizes = require('./screenSizes');
 
 // ----- DEFINE SETTINGS FUNCTIONS
 
@@ -158,14 +159,73 @@ module.exports = {
 						.userDashboard(
 							{ offset, type: 'photo' },
 							(tumblrError, tumblrResponse) => {
-								// if Tumblr didn't return an error, resolve this promise with the posts data
+								// if Tumblr didn't return an error
 								if (!tumblrError) {
-									resolve({ error: false, dashPosts: tumblrResponse });
+									// extract needed posts data from response
+									const posts = [];
+									tumblrResponse.posts.forEach((returnedPost) => {
+										if (returnedPost.blog_name !== 'skipbaker') {
+											const post = {
+												id: returnedPost.id,
+												blog_name: returnedPost.blog_name,
+												post_url: returnedPost.post_url,
+												reblog_key: returnedPost.reblog_key,
+												pics: {},
+											};
+											// get the smallest image that is larger than 
+											// 		small screen width, the smallest that is larger
+											// 		than medium screen width, and the largest image
+											const postPics = returnedPost.photos[0].alt_sizes;
+											postPics.reverse();
+											postPics.forEach((postPic) => {
+												if (
+													!post.pics.minimum &&
+													postPic.width > 499
+												) {
+													post.pics.minimum = postPic.url;
+												}
+												if (
+													!post.pics.small &&
+													postPic.width > screenSizes.ReturnSmallMax()
+												) {
+													post.pics.small = postPic.url;
+												}
+												if (
+													!post.pics.medium &&
+													postPic.width > screenSizes.ReturnMediumMax()
+												) {
+													post.pics.medium = postPic.url;
+												}
+												if (
+													!post.pics.large &&
+													postPic.width > screenSizes.ReturnLargeMin()
+												) {
+													post.pics.large = postPic.url;
+												}
+											});
+											// if a minimum was found, but no small, medium, or large,
+											// 		use minimum for others
+											if (post.pics.minimum && !post.pics.small) {
+												post.pics.small = post.pics.minimum;
+											}
+											if (post.pics.small && !post.pics.medium) {
+												post.pics.medium = post.pics.small;
+											}
+											if (post.pics.medium && !post.pics.large) {
+												post.pics.large = post.pics.medium;
+											}
+											// if at least a small image was found, add this post to posts
+											if (post.pics.small) {
+												posts.push(post);
+											}
+										}
+									});
+									// resolve this promist with the posts
+									resolve({ error: false, posts });
 								} else {
 									reject({ error: true, tumblrError });
 								}
 							},
-							// // eslint-disable-line comma-dangle
 						);
 				})
 				// if the promise is rejected with an error, reject this promise with the error

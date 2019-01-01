@@ -40,7 +40,21 @@ module.exports = {
 				.catch((error) => { reject(error); });
 		})),
 
-	ReturnCurrentPostSchedulingSeason: () => 
+	ReturnAllPostSchedulingSeasons: () =>
+		// return a new promise
+		new Promise(((resolve, reject) => {
+			// get a promise to get post scheduling settings from db
+			module.exports.ReturnPostsSettings()
+				// if the promise is resolved with the settings
+				.then((postsSettings) => {
+					// resolve this promise with the relevant data
+					resolve(postsSettings.postsSettings.scheduling.seasonal);					
+				})
+				// if the promise is rejected with an error, reject this promise with the error
+				.catch((error) => { reject(error); });
+		})),
+
+	ReturnCurrentPostSchedulingSeason: () =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			// get the current local time in UTC format
@@ -53,7 +67,7 @@ module.exports = {
 			const dayAfterTurkeyDay = module.exports.ReturnDayAfterTurkeyDayLocalUTCFormat();
 			// get a promise to get post scheduling settings from db
 			module.exports.ReturnPostsSettings()
-			// if the promise is resolved with the settings
+				// if the promise is resolved with the settings
 				.then((postsSettings) => {
 					// iterate over the seasonal settings
 					postsSettings.postsSettings.scheduling.seasonal.forEach(({
@@ -87,9 +101,9 @@ module.exports = {
 				})
 				// if the promise is rejected with an error, reject this promise with the error
 				.catch((error) => { reject(error); });
-		})),	
+		})),
 
-	ReturnNowIsInsidePostingWindow: () => 
+	ReturnNowIsInsidePostingWindow: () =>
 		// return a new promise
 		new Promise(((resolve, reject) => {
 			// get the current local time in UTC format
